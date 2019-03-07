@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.props" Condition="Exists('..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.props')" />
+  <Import Project="..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props" Condition="Exists('..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props')" />
+  <Import Project="..\packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props" Condition="Exists('..\packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props')" />
+  <Import Project="..\packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props" Condition="Exists('..\packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD96A60C-3605-4CF0-AD9B-9C25DAF1377E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GamePad_Intercepts</RootNamespace>
+    <AssemblyName>GamePad Intercepts</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>5A3614C0E1BAE4BA8F61E8DD8D5208A100234D3D</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>GamePad Intercepts_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ic_app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleWifi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleWifi.1.0.0.0\lib\net40\SimpleWifi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sources\App.cs" />
+    <Compile Include="Sources\ControllerInputManager.cs" />
+    <Compile Include="Sources\Forms\StickyNotificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\StickyNotificationForm.Designer.cs">
+      <DependentUpon>StickyNotificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_SESSIONFLAGS_XXX.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_STREAMFLAGS_XXX.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\ComCLSIDs.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\ComIIDs.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\DEVICE_STATE_XXX.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\ENDPOINT_HARDWARE_SUPPORT_XXX.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Constants\PropertyKeys.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AUDCLNT_BUFFERFLAGS.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AUDCLNT_SHAREMODE.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AudioSessionDisconnectReason.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AudioSessionState.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\ConnectorType.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\DataFlow.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\EDataFlow.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\EndpointFormFactor.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\ERole.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\KSJACK_SINK_CONNECTIONTYPE.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\PartType.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Externals\CLSCTX.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Externals\IPropertyStore.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Externals\PROPERTYKEY.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Externals\PROPVARIANT.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Externals\STGM.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\Definitions.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioAutoGainControl.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioBass.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioCaptureClient.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioChannelConfig.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClient.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClock.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClock2.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClockAdjustment.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolume.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolumeCallback.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolumeEx.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioInputSelector.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioLoudness.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMeterInformation.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMidrange.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMute.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioOutputSelector.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioPeakMeter.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioRenderClient.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionControl.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionControl2.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionEnumerator.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionEvents.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionManager.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionManager2.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionNotification.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioStreamVolume.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioTreble.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioVolumeDuckNotification.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioVolumeLevel.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IChannelAudioVolume.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IConnector.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IControlChangeNotify.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IControlInterface.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IDeviceSpecificProperty.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IDeviceTopology.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsFormatSupport.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackDescription.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackDescription2.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackSinkInformation.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDevice.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDeviceCollection.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDeviceEnumerator.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMEndpoint.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMNotificationClient.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPart.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPartsList.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPerChannelDbLevel.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\ISimpleAudioVolume.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\ISubunit.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\AUDIO_VOLUME_NOTIFICATION_DATA.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\DIRECTX_AUDIO_ACTIVATION_PARAMS.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_DESCRIPTION.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_DESCRIPTION2.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_SINK_INFORMATION.cs" />
+    <Compile Include="Sources\Libraries\CoreAudio\Structures\LUID.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Controller.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4DeviceManager.cs" />
+    <Compile Include="Sources\Libraries\WinApi\DwmApi.cs" />
+    <Compile Include="Sources\Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\HomeUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\HomeUserControl.Designer.cs">
+      <DependentUpon>HomeUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WebBrowserUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WebBrowserUserControl.Designer.cs">
+      <DependentUpon>WebBrowserUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetupUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetupUserControl.Designer.cs">
+      <DependentUpon>WifiSetupUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\NotificationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\NotificationForm.Designer.cs">
+      <DependentUpon>NotificationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\KeyboardInputHandler.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Controls.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Device.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Devices.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Sixaxis.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4State.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4StateExposed.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\DS4Touchpad.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\Extensions.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\HidDevice.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\HidDeviceAttributes.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\HidDeviceCapabilities.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\HidDevices.cs" />
+    <Compile Include="Sources\Libraries\DS4Library\NativeMethods.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\IInputDeviceStateAdaptor.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\IInputMessageDispatcher.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\IInputSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\IKeyboardSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\IMouseSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\InputBuilder.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\InputSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\KeyboardSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\MouseButton.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\MouseSimulator.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\HARDWAREINPUT.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\INPUT.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\InputType.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\KEYBDINPUT.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\KeyboardFlag.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\MouseFlag.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\MOUSEINPUT.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\MOUSEKEYBDHARDWAREINPUT.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\NativeMethods.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\VirtualKeyCode.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\Native\XButton.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\WindowsInputDeviceStateAdaptor.cs" />
+    <Compile Include="Sources\Libraries\WindowsInput\WindowsInputMessageDispatcher.cs" />
+    <Compile Include="Sources\LootChest.cs" />
+    <Compile Include="Sources\MouseAndKeyboardRobot.cs" />
+    <Compile Include="Sources\NotificationManager.cs" />
+    <Compile Include="Sources\Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\MessageOnlyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\MessageOnlyForm.Designer.cs">
+      <DependentUpon>MessageOnlyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\SystemAudio.cs" />
+    <Compile Include="Sources\SystemMonitor.cs" />
+    <Compile Include="Sources\Libraries\WinApi\User32.cs" />
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\UserControlMetaData.cs" />
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListItemUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListItemUserControl.Designer.cs">
+      <DependentUpon>WifiAccessPointListItemUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListUserControl.Designer.cs">
+      <DependentUpon>WifiAccessPointListUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Utils.cs" />
+    <Compile Include="Sources\WifiManager.cs" />
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.Designer.cs">
+      <DependentUpon>WifiAccessPointPasswordPromptUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiSetupProgressUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiSetupProgressUserControl.Designer.cs">
+      <DependentUpon>WifiSetupProgressUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiStatusUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiStatusUserControl.Designer.cs">
+      <DependentUpon>WifiStatusUserControl.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Sources\Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\MessageOnlyForm.resx">
+      <DependentUpon>MessageOnlyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\StickyNotificationForm.resx">
+      <DependentUpon>StickyNotificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\HomeUserControl.resx">
+      <DependentUpon>HomeUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WebBrowserUserControl.resx">
+      <DependentUpon>WebBrowserUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetupUserControl.resx">
+      <DependentUpon>WifiSetupUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\NotificationForm.resx">
+      <DependentUpon>NotificationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListItemUserControl.resx">
+      <DependentUpon>WifiAccessPointListItemUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListUserControl.resx">
+      <DependentUpon>WifiAccessPointListUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.resx">
+      <DependentUpon>WifiAccessPointPasswordPromptUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetup\WifiSetupProgressUserControl.resx">
+      <DependentUpon>WifiSetupProgressUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sources\Forms\UserControls\WifiSetup\WifiStatusUserControl.resx">
+      <DependentUpon>WifiStatusUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.manifest">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\FreeVK.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ic_app.ico" />
+    <Content Include="Assets\nircmd.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\ic_back.png" />
+    <None Include="Resources\ic_wifi.png" />
+    <None Include="Resources\ic_web_browser.png" />
+    <None Include="Resources\ic_steam.png" />
+    <None Include="Resources\if_close_black.png" />
+    <None Include="Resources\ic_back_black.png" />
+    <None Include="Resources\ic_app.png" />
+    <None Include="Resources\ic_volume.png" />
+    <None Include="Resources\ic_battery.png" />
+    <None Include="Resources\bg_transparent.png" />
+    <None Include="Resources\ic_close.png" />
+    <None Include="Resources\bg_wood_black.jpg" />
+    <None Include="Resources\bg_metal_silver.jpg" />
+    <None Include="Resources\bg_metal_white.jpg" />
+    <None Include="Resources\ic_power_options.png" />
+    <None Include="Resources\ic_wifi_connected.png" />
+    <None Include="Resources\ic_wifi_disconnected.png" />
+    <None Include="Resources\steam_logo.jpg" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x64.3.3578.1863\build\cef.redist.x64.props'))" />
+    <Error Condition="!Exists('..\packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\cef.redist.x86.3.3578.1863\build\cef.redist.x86.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.props'))" />
+    <Error Condition="!Exists('..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.targets'))" />
+  </Target>
+  <Import Project="..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets" Condition="Exists('..\packages\CefSharp.Common.71.0.0\build\CefSharp.Common.targets')" />
+  <Import Project="..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.targets" Condition="Exists('..\packages\CefSharp.WinForms.71.0.0\build\CefSharp.WinForms.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
