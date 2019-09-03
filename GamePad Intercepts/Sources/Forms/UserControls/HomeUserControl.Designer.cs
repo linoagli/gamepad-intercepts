@@ -30,22 +30,25 @@
         {
             this.metroPanel_controlsContainer = new MetroFramework.Controls.MetroPanel();
             this.metroPanel_statusDisplayArea = new MetroFramework.Controls.MetroPanel();
+            this.metroLabel_systemVolumeStatus = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel_networkStatus = new MetroFramework.Controls.MetroLabel();
+            this.metroLabel_powerStatus = new MetroFramework.Controls.MetroLabel();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.metroPanel_mainOptions = new MetroFramework.Controls.MetroPanel();
+            this.metroTile_powerOptions = new MetroFramework.Controls.MetroTile();
+            this.metroTile_soundSettings = new MetroFramework.Controls.MetroTile();
+            this.metroTile_accountSettings = new MetroFramework.Controls.MetroTile();
             this.metroTile_launchGamePlatform = new MetroFramework.Controls.MetroTile();
             this.metroTile_wifiSettings = new MetroFramework.Controls.MetroTile();
             this.metroTile_webBrowser = new MetroFramework.Controls.MetroTile();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.metroLabel_powerStatus = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel_networkStatus = new MetroFramework.Controls.MetroLabel();
-            this.metroLabel_systemVolumeStatus = new MetroFramework.Controls.MetroLabel();
             this.metroPanel_controlsContainer.SuspendLayout();
             this.metroPanel_statusDisplayArea.SuspendLayout();
-            this.metroPanel_mainOptions.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.metroPanel_mainOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // metroPanel_controlsContainer
@@ -60,7 +63,7 @@
             this.metroPanel_controlsContainer.HorizontalScrollbarSize = 10;
             this.metroPanel_controlsContainer.Location = new System.Drawing.Point(3, 3);
             this.metroPanel_controlsContainer.Name = "metroPanel_controlsContainer";
-            this.metroPanel_controlsContainer.Size = new System.Drawing.Size(1096, 589);
+            this.metroPanel_controlsContainer.Size = new System.Drawing.Size(1274, 714);
             this.metroPanel_controlsContainer.TabIndex = 0;
             this.metroPanel_controlsContainer.VerticalScrollbarBarColor = true;
             this.metroPanel_controlsContainer.VerticalScrollbarHighlightOnWheel = false;
@@ -78,7 +81,7 @@
             this.metroPanel_statusDisplayArea.HorizontalScrollbarBarColor = true;
             this.metroPanel_statusDisplayArea.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel_statusDisplayArea.HorizontalScrollbarSize = 10;
-            this.metroPanel_statusDisplayArea.Location = new System.Drawing.Point(736, 3);
+            this.metroPanel_statusDisplayArea.Location = new System.Drawing.Point(914, 3);
             this.metroPanel_statusDisplayArea.Name = "metroPanel_statusDisplayArea";
             this.metroPanel_statusDisplayArea.Size = new System.Drawing.Size(357, 116);
             this.metroPanel_statusDisplayArea.TabIndex = 0;
@@ -86,94 +89,32 @@
             this.metroPanel_statusDisplayArea.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel_statusDisplayArea.VerticalScrollbarSize = 10;
             // 
-            // metroPanel_mainOptions
+            // metroLabel_systemVolumeStatus
             // 
-            this.metroPanel_mainOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroPanel_mainOptions.Controls.Add(this.metroTile_launchGamePlatform);
-            this.metroPanel_mainOptions.Controls.Add(this.metroTile_wifiSettings);
-            this.metroPanel_mainOptions.Controls.Add(this.metroTile_webBrowser);
-            this.metroPanel_mainOptions.HorizontalScrollbarBarColor = true;
-            this.metroPanel_mainOptions.HorizontalScrollbarHighlightOnWheel = false;
-            this.metroPanel_mainOptions.HorizontalScrollbarSize = 10;
-            this.metroPanel_mainOptions.Location = new System.Drawing.Point(100, 243);
-            this.metroPanel_mainOptions.Name = "metroPanel_mainOptions";
-            this.metroPanel_mainOptions.Size = new System.Drawing.Size(897, 245);
-            this.metroPanel_mainOptions.TabIndex = 0;
-            this.metroPanel_mainOptions.VerticalScrollbarBarColor = true;
-            this.metroPanel_mainOptions.VerticalScrollbarHighlightOnWheel = false;
-            this.metroPanel_mainOptions.VerticalScrollbarSize = 10;
+            this.metroLabel_systemVolumeStatus.Location = new System.Drawing.Point(41, 79);
+            this.metroLabel_systemVolumeStatus.Name = "metroLabel_systemVolumeStatus";
+            this.metroLabel_systemVolumeStatus.Size = new System.Drawing.Size(313, 32);
+            this.metroLabel_systemVolumeStatus.TabIndex = 8;
+            this.metroLabel_systemVolumeStatus.Text = "80%";
+            this.metroLabel_systemVolumeStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroTile_launchGamePlatform
+            // metroLabel_networkStatus
             // 
-            this.metroTile_launchGamePlatform.ActiveControl = null;
-            this.metroTile_launchGamePlatform.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.metroTile_launchGamePlatform.Location = new System.Drawing.Point(338, 13);
-            this.metroTile_launchGamePlatform.Name = "metroTile_launchGamePlatform";
-            this.metroTile_launchGamePlatform.Size = new System.Drawing.Size(220, 220);
-            this.metroTile_launchGamePlatform.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroTile_launchGamePlatform.TabIndex = 0;
-            this.metroTile_launchGamePlatform.Text = "Game Platform Launcher";
-            this.metroTile_launchGamePlatform.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_steam;
-            this.metroTile_launchGamePlatform.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.metroTile_launchGamePlatform.UseSelectable = true;
-            this.metroTile_launchGamePlatform.UseTileImage = true;
-            this.metroTile_launchGamePlatform.Click += new System.EventHandler(this.metroTile_launchGamePlatform_Click);
+            this.metroLabel_networkStatus.Location = new System.Drawing.Point(41, 41);
+            this.metroLabel_networkStatus.Name = "metroLabel_networkStatus";
+            this.metroLabel_networkStatus.Size = new System.Drawing.Size(313, 32);
+            this.metroLabel_networkStatus.TabIndex = 7;
+            this.metroLabel_networkStatus.Text = "No Network Connection";
+            this.metroLabel_networkStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // metroTile_wifiSettings
+            // metroLabel_powerStatus
             // 
-            this.metroTile_wifiSettings.ActiveControl = null;
-            this.metroTile_wifiSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.metroTile_wifiSettings.Location = new System.Drawing.Point(636, 13);
-            this.metroTile_wifiSettings.Name = "metroTile_wifiSettings";
-            this.metroTile_wifiSettings.Size = new System.Drawing.Size(220, 220);
-            this.metroTile_wifiSettings.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroTile_wifiSettings.TabIndex = 0;
-            this.metroTile_wifiSettings.Text = "Wifi Setup";
-            this.metroTile_wifiSettings.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_wifi;
-            this.metroTile_wifiSettings.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.metroTile_wifiSettings.UseSelectable = true;
-            this.metroTile_wifiSettings.UseTileImage = true;
-            this.metroTile_wifiSettings.Click += new System.EventHandler(this.metroTile_wifiSettings_Click);
-            // 
-            // metroTile_webBrowser
-            // 
-            this.metroTile_webBrowser.ActiveControl = null;
-            this.metroTile_webBrowser.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.metroTile_webBrowser.Location = new System.Drawing.Point(41, 13);
-            this.metroTile_webBrowser.Name = "metroTile_webBrowser";
-            this.metroTile_webBrowser.Size = new System.Drawing.Size(220, 220);
-            this.metroTile_webBrowser.Style = MetroFramework.MetroColorStyle.Silver;
-            this.metroTile_webBrowser.TabIndex = 0;
-            this.metroTile_webBrowser.Text = "Web Browser";
-            this.metroTile_webBrowser.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_web_browser;
-            this.metroTile_webBrowser.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.metroTile_webBrowser.UseSelectable = true;
-            this.metroTile_webBrowser.UseTileImage = true;
-            this.metroTile_webBrowser.Click += new System.EventHandler(this.metroTile_webBrowser_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBox1.BackgroundImage = global::GamePad_Intercepts.Properties.Resources.ic_battery;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox1.TabIndex = 3;
-            this.pictureBox1.TabStop = false;
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.pictureBox2.BackgroundImage = global::GamePad_Intercepts.Properties.Resources.ic_wifi_connected;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBox2.Location = new System.Drawing.Point(3, 41);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
-            this.pictureBox2.TabIndex = 4;
-            this.pictureBox2.TabStop = false;
+            this.metroLabel_powerStatus.Location = new System.Drawing.Point(41, 3);
+            this.metroLabel_powerStatus.Name = "metroLabel_powerStatus";
+            this.metroLabel_powerStatus.Size = new System.Drawing.Size(313, 32);
+            this.metroLabel_powerStatus.TabIndex = 6;
+            this.metroLabel_powerStatus.Text = "99%";
+            this.metroLabel_powerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // pictureBox3
             // 
@@ -186,32 +127,151 @@
             this.pictureBox3.TabIndex = 5;
             this.pictureBox3.TabStop = false;
             // 
-            // metroLabel_powerStatus
+            // pictureBox2
             // 
-            this.metroLabel_powerStatus.Location = new System.Drawing.Point(41, 3);
-            this.metroLabel_powerStatus.Name = "metroLabel_powerStatus";
-            this.metroLabel_powerStatus.Size = new System.Drawing.Size(313, 32);
-            this.metroLabel_powerStatus.TabIndex = 6;
-            this.metroLabel_powerStatus.Text = "99%";
-            this.metroLabel_powerStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pictureBox2.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.pictureBox2.BackgroundImage = global::GamePad_Intercepts.Properties.Resources.ic_wifi_connected;
+            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox2.Location = new System.Drawing.Point(3, 41);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox2.TabIndex = 4;
+            this.pictureBox2.TabStop = false;
             // 
-            // metroLabel_networkStatus
+            // pictureBox1
             // 
-            this.metroLabel_networkStatus.Location = new System.Drawing.Point(41, 41);
-            this.metroLabel_networkStatus.Name = "metroLabel_networkStatus";
-            this.metroLabel_networkStatus.Size = new System.Drawing.Size(313, 32);
-            this.metroLabel_networkStatus.TabIndex = 7;
-            this.metroLabel_networkStatus.Text = "No Network Connection";
-            this.metroLabel_networkStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pictureBox1.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.pictureBox1.BackgroundImage = global::GamePad_Intercepts.Properties.Resources.ic_battery;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(32, 32);
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
-            // metroLabel_systemVolumeStatus
+            // metroPanel_mainOptions
             // 
-            this.metroLabel_systemVolumeStatus.Location = new System.Drawing.Point(41, 79);
-            this.metroLabel_systemVolumeStatus.Name = "metroLabel_systemVolumeStatus";
-            this.metroLabel_systemVolumeStatus.Size = new System.Drawing.Size(313, 32);
-            this.metroLabel_systemVolumeStatus.TabIndex = 8;
-            this.metroLabel_systemVolumeStatus.Text = "80%";
-            this.metroLabel_systemVolumeStatus.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.metroPanel_mainOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_powerOptions);
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_soundSettings);
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_accountSettings);
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_launchGamePlatform);
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_wifiSettings);
+            this.metroPanel_mainOptions.Controls.Add(this.metroTile_webBrowser);
+            this.metroPanel_mainOptions.HorizontalScrollbarBarColor = true;
+            this.metroPanel_mainOptions.HorizontalScrollbarHighlightOnWheel = false;
+            this.metroPanel_mainOptions.HorizontalScrollbarSize = 10;
+            this.metroPanel_mainOptions.Location = new System.Drawing.Point(50, 147);
+            this.metroPanel_mainOptions.Name = "metroPanel_mainOptions";
+            this.metroPanel_mainOptions.Size = new System.Drawing.Size(1173, 538);
+            this.metroPanel_mainOptions.TabIndex = 0;
+            this.metroPanel_mainOptions.VerticalScrollbarBarColor = true;
+            this.metroPanel_mainOptions.VerticalScrollbarHighlightOnWheel = false;
+            this.metroPanel_mainOptions.VerticalScrollbarSize = 10;
+            // 
+            // metroTile_powerOptions
+            // 
+            this.metroTile_powerOptions.ActiveControl = null;
+            this.metroTile_powerOptions.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_powerOptions.Location = new System.Drawing.Point(871, 35);
+            this.metroTile_powerOptions.Name = "metroTile_powerOptions";
+            this.metroTile_powerOptions.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_powerOptions.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_powerOptions.TabIndex = 5;
+            this.metroTile_powerOptions.Text = "Power Options";
+            this.metroTile_powerOptions.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_powerOptions.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_power_options;
+            this.metroTile_powerOptions.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_powerOptions.UseSelectable = true;
+            this.metroTile_powerOptions.UseTileImage = true;
+            this.metroTile_powerOptions.Click += new System.EventHandler(this.metroTile_powerOptions_Click);
+            // 
+            // metroTile_soundSettings
+            // 
+            this.metroTile_soundSettings.ActiveControl = null;
+            this.metroTile_soundSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_soundSettings.Location = new System.Drawing.Point(346, 35);
+            this.metroTile_soundSettings.Name = "metroTile_soundSettings";
+            this.metroTile_soundSettings.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_soundSettings.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_soundSettings.TabIndex = 2;
+            this.metroTile_soundSettings.Text = "Sound Settings";
+            this.metroTile_soundSettings.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_soundSettings.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_sound_settings;
+            this.metroTile_soundSettings.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_soundSettings.UseSelectable = true;
+            this.metroTile_soundSettings.UseTileImage = true;
+            this.metroTile_soundSettings.Click += new System.EventHandler(this.metroTile_soundSettings_Click);
+            // 
+            // metroTile_accountSettings
+            // 
+            this.metroTile_accountSettings.ActiveControl = null;
+            this.metroTile_accountSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_accountSettings.Location = new System.Drawing.Point(82, 35);
+            this.metroTile_accountSettings.Name = "metroTile_accountSettings";
+            this.metroTile_accountSettings.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_accountSettings.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_accountSettings.TabIndex = 4;
+            this.metroTile_accountSettings.Text = "Account Settings";
+            this.metroTile_accountSettings.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_accountSettings.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_account_settings;
+            this.metroTile_accountSettings.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_accountSettings.UseSelectable = true;
+            this.metroTile_accountSettings.UseTileImage = true;
+            this.metroTile_accountSettings.Click += new System.EventHandler(this.metroTile_accountSettings_Click);
+            // 
+            // metroTile_launchGamePlatform
+            // 
+            this.metroTile_launchGamePlatform.ActiveControl = null;
+            this.metroTile_launchGamePlatform.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_launchGamePlatform.Location = new System.Drawing.Point(608, 284);
+            this.metroTile_launchGamePlatform.Name = "metroTile_launchGamePlatform";
+            this.metroTile_launchGamePlatform.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_launchGamePlatform.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_launchGamePlatform.TabIndex = 0;
+            this.metroTile_launchGamePlatform.Text = "Game Platform Launcher";
+            this.metroTile_launchGamePlatform.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_launchGamePlatform.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_steam;
+            this.metroTile_launchGamePlatform.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_launchGamePlatform.UseSelectable = true;
+            this.metroTile_launchGamePlatform.UseTileImage = true;
+            this.metroTile_launchGamePlatform.Click += new System.EventHandler(this.metroTile_launchGamePlatform_Click);
+            // 
+            // metroTile_wifiSettings
+            // 
+            this.metroTile_wifiSettings.ActiveControl = null;
+            this.metroTile_wifiSettings.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_wifiSettings.Location = new System.Drawing.Point(608, 35);
+            this.metroTile_wifiSettings.Name = "metroTile_wifiSettings";
+            this.metroTile_wifiSettings.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_wifiSettings.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_wifiSettings.TabIndex = 0;
+            this.metroTile_wifiSettings.Text = "Wifi Settings";
+            this.metroTile_wifiSettings.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_wifiSettings.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_wifi;
+            this.metroTile_wifiSettings.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_wifiSettings.UseSelectable = true;
+            this.metroTile_wifiSettings.UseTileImage = true;
+            this.metroTile_wifiSettings.Click += new System.EventHandler(this.metroTile_wifiSettings_Click);
+            // 
+            // metroTile_webBrowser
+            // 
+            this.metroTile_webBrowser.ActiveControl = null;
+            this.metroTile_webBrowser.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroTile_webBrowser.Location = new System.Drawing.Point(346, 284);
+            this.metroTile_webBrowser.Name = "metroTile_webBrowser";
+            this.metroTile_webBrowser.Size = new System.Drawing.Size(220, 220);
+            this.metroTile_webBrowser.Style = MetroFramework.MetroColorStyle.Silver;
+            this.metroTile_webBrowser.TabIndex = 0;
+            this.metroTile_webBrowser.Text = "Web Browser";
+            this.metroTile_webBrowser.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.metroTile_webBrowser.TileImage = global::GamePad_Intercepts.Properties.Resources.ic_web_browser;
+            this.metroTile_webBrowser.TileImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.metroTile_webBrowser.UseSelectable = true;
+            this.metroTile_webBrowser.UseTileImage = true;
+            this.metroTile_webBrowser.Click += new System.EventHandler(this.metroTile_webBrowser_Click);
             // 
             // HomeUserControl
             // 
@@ -219,13 +279,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.metroPanel_controlsContainer);
             this.Name = "HomeUserControl";
-            this.Size = new System.Drawing.Size(1102, 595);
+            this.Size = new System.Drawing.Size(1280, 720);
             this.metroPanel_controlsContainer.ResumeLayout(false);
             this.metroPanel_statusDisplayArea.ResumeLayout(false);
-            this.metroPanel_mainOptions.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.metroPanel_mainOptions.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -244,5 +304,8 @@
         private MetroFramework.Controls.MetroLabel metroLabel_systemVolumeStatus;
         private MetroFramework.Controls.MetroLabel metroLabel_networkStatus;
         private MetroFramework.Controls.MetroLabel metroLabel_powerStatus;
+        private MetroFramework.Controls.MetroTile metroTile_soundSettings;
+        private MetroFramework.Controls.MetroTile metroTile_accountSettings;
+        private MetroFramework.Controls.MetroTile metroTile_powerOptions;
     }
 }

@@ -2,6 +2,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Security.Cryptography;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WinApi;
@@ -14,7 +16,6 @@ namespace GamePad_Intercepts
         public static readonly string PATH_DIRECTORY_BROWSER_CACHE = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"browserCache");
         public static readonly string PATH_FILE_NIRCMD = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"Assets\nircmd.exe");
         public static readonly string PATH_FILE_ON_SCREEN_KEYBOARD = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"Assets\FreeVK.exe"); // TODO: Might need to find another free or open source alternative
-        public static readonly string PATH_FILE_XADDITUS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"xadditus_app\xadditus_app.exe");
         public static readonly string PATH_FILE_STEAM = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Steam\Steam.exe");
 
         private static MainForm mainForm;
@@ -49,12 +50,11 @@ namespace GamePad_Intercepts
             // on the main windows forms thread when necessary
             synchronizationContext = (WindowsFormsSynchronizationContext)SynchronizationContext.Current;
 
-            // Performing all other necessary initializations and setups below
             notificationManager = new NotificationManager(synchronizationContext);
             notificationManager.NotificationForm = notificationForm;
             notificationManager.StickyNotificationForm = stickyNotificationForm;
 
-            systemMonitor = new SystemMonitor(mainForm.HomeUserControl); // TODO: decouple the monitor from the control and implement some form of message bus system
+            systemMonitor = new SystemMonitor();
             systemMonitor.Run();
 
             keyboardInputMonitor = new KeyboardInputMonitor();
@@ -63,20 +63,27 @@ namespace GamePad_Intercepts
             controllerInputManager = new ControllerInputManager();
             controllerInputManager.Init();
 
-            // Launching the necessary 3rd party apps
-            ProcessStartInfo xadditusProcessInfo = new ProcessStartInfo();
-            xadditusProcessInfo.FileName = PATH_FILE_XADDITUS;
-            xadditusProcessInfo.UseShellExecute = true;
-            xadditusProcessInfo.Arguments = "";
-            xadditusProcessInfo.Verb = "runas";
-            Process.Start(xadditusProcessInfo);
-
-            // Launching the home screen
-            MessageCenter.ToggleHomeScreen();
+            // Locking up the app and launching the main UI
+            MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowHomeScreen });
         }
 
-        public class MessageCenter
+        public class MissionControl
         {
+            private static bool isAuthenticated = false;
+            public static bool IsAuthenticated
+            {
+                get
+                {
+                    string accountPassword = GetAccountPassword();
+                    return isAuthenticated || (accountPassword == null || accountPassword.Length < 1);
+                }
+
+                set
+                {
+                    isAuthenticated = value;
+                }
+            }
+
             public static void ShowNotification(string message)
             {
                 Console.WriteLine("Notifying: " + message);
@@ -88,7 +95,6 @@ namespace GamePad_Intercepts
                 Console.WriteLine("Notifying sticky: " + message);
                 notificationManager.NotifySticky(message, tag);
             }
-
             public static void HideStickyNotification(string tag)
             {
                 notificationManager.DismissSticky(tag);
@@ -123,56 +129,10 @@ namespace GamePad_Intercepts
             {
                 ProcessStartInfo steamProcessInfo = new ProcessStartInfo();
                 steamProcessInfo.FileName = PATH_FILE_STEAM;
-                steamProcessInfo.Arguments = "-bigpicture"; // TODO: "-bigpicture -window"
+                steamProcessInfo.Arguments = "-bigpicture";
                 Process.Start(steamProcessInfo);
 
                 mainForm.Hide();
-            }
-
-            public static void ToggleHomeScreen()
-            {
-                synchronizationContext.Post(delegate
-                {                    
-                    if (!mainForm.Visible)
-                    {
-                        mainForm.Show();
-                        User32.SetForegroundWindow(mainForm.Handle);
-
-                        mainForm.ShowHomeUserControl();
-                    }
-                    else
-                    {
-                        mainForm.Hide();
-                    }
-                }, null);
-            }
-
-            public static void ShowWebBrowser()
-            {
-                synchronizationContext.Post(delegate
-                {
-                    if (!mainForm.Visible)
-                    {
-                        mainForm.Show();
-                        User32.SetForegroundWindow(mainForm.Handle);
-                    }
-
-                    mainForm.ShowWebBrowserUserControl();
-                }, null);
-            }
-
-            public static void ShowWifiSettings()
-            {
-                synchronizationContext.Post(delegate
-                {
-                    if (!mainForm.Visible)
-                    {
-                        mainForm.Show();
-                        User32.SetForegroundWindow(mainForm.Handle);
-                    }
-
-                    mainForm.ShowWifiSetupUserControl();
-                }, null);
             }
 
             public static void ToggleOnScreenKeyboard()
@@ -188,11 +148,6 @@ namespace GamePad_Intercepts
                 }
             }
 
-            public static void ShowSoundControlPanel()
-            {
-                Process.Start("mmsys.cpl");
-            }
-
             public static void EnableControllerMouseKeyboardEmulation()
             {
                 controllerInputManager.EnableMouseKeyboardEmulation();
@@ -206,6 +161,40 @@ namespace GamePad_Intercepts
             public static void AltTab()
             {
                 messageOnlyForm.AltTab();
+            }
+
+            public static string GetAccountPassword()
+            {
+                if (!File.Exists(@"auth.dat")) return null;
+
+                return File.ReadAllText(@"auth.dat");
+            }
+
+            public static void SetAccountPassword(string password)
+            {
+                if (password == null)
+                {
+                    File.Delete(@"auth.dat");
+                }
+                else
+                {
+                    byte[] bytes = Encoding.ASCII.GetBytes(password);
+                    byte[] result = new SHA512Managed().ComputeHash(bytes);
+                    string hash = Encoding.ASCII.GetString(result);
+
+                    File.WriteAllText(@"auth.dat", hash);
+                }
+            }
+
+            public static bool CheckAgainstAccountPassword(string input)
+            {
+                if (input == null) return false;
+
+                byte[] bytes = Encoding.ASCII.GetBytes(input);
+                byte[] result = new SHA512Managed().ComputeHash(bytes);
+                string hash = Encoding.ASCII.GetString(result);
+
+                return hash == GetAccountPassword();
             }
         }
     }

@@ -19,7 +19,7 @@ namespace DS4Library
         public byte red;
         public byte green;
         public byte blue;
-        public DS4Color(System.Drawing.Color c)
+        public DS4Color(Color c)
         {
             red = c.R;
             green = c.G;

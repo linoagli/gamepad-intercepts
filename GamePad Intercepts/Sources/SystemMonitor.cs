@@ -17,11 +17,9 @@ namespace GamePad_Intercepts
         private int currentSystemVolumePercent = -1;
         private string currentWifiStatus = null;
 
-        private HomeUserControl homeUserControl;
-
-        public SystemMonitor(HomeUserControl homeUserControl)
+        public SystemMonitor()
         {
-            this.homeUserControl = homeUserControl;
+            
         }
 
         public void Run()
@@ -66,8 +64,8 @@ namespace GamePad_Intercepts
                 //TimeSpan batteryTime = TimeSpan.FromSeconds(SystemInformation.PowerStatus.BatteryLifeRemaining);
                 //string powerInfo = batteryPercent.ToString() + "% (" + batteryTime.Hours + " hrs " + batteryTime.Minutes + " mins)";
 
-                homeUserControl.UpdatePowerStatusDisplay(batteryPercent.ToString() + " %");
-                App.MessageCenter.ShowNotification("Battery Level Changed:\n" + batteryPercent.ToString() + "%");
+                MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { BatteryPercent = batteryPercent });
+                App.MissionControl.ShowNotification("Battery Level Changed:\n" + batteryPercent.ToString() + "%");
             }
         }
 
@@ -87,8 +85,8 @@ namespace GamePad_Intercepts
             {
                 currentSystemVolumePercent = systemVolumePercent;
 
-                homeUserControl.UpdateSystemVolumeStatusDisplay(systemVolumePercent.ToString() + "%");
-                App.MessageCenter.ShowNotification("Volume Changed:\n" + systemVolumePercent.ToString() + "%");
+                MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { SystemVolumePercent = systemVolumePercent });
+                App.MissionControl.ShowNotification("Volume Changed:\n" + systemVolumePercent.ToString() + "%");
             }
         }
 
@@ -117,8 +115,8 @@ namespace GamePad_Intercepts
             {
                 currentWifiStatus = wifiStatus;
 
-                homeUserControl.UpdateNetworkStatusDisplay(currentWifiStatus);
-                App.MessageCenter.ShowNotification("Network Status Changed:\n" + currentWifiStatus);
+                MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { WifiStatus = wifiStatus });
+                App.MissionControl.ShowNotification("Network Status Changed:\n" + currentWifiStatus);
             }
         }
     }

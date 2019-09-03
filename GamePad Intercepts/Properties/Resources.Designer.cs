@@ -73,6 +73,16 @@ namespace GamePad_Intercepts.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_account_settings {
+            get {
+                object obj = ResourceManager.GetObject("ic_account_settings", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_app {
             get {
                 object obj = ResourceManager.GetObject("ic_app", resourceCulture);
@@ -116,6 +126,26 @@ namespace GamePad_Intercepts.Properties {
         internal static System.Drawing.Bitmap ic_power_options {
             get {
                 object obj = ResourceManager.GetObject("ic_power_options", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_refresh {
+            get {
+                object obj = ResourceManager.GetObject("ic_refresh", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ic_sound_settings {
+            get {
+                object obj = ResourceManager.GetObject("ic_sound_settings", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

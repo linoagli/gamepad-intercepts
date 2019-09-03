@@ -21,9 +21,13 @@ namespace GamePad_Intercepts.Forms
     {
         private const string BREADCRUMB_BASE = "GamePad Intercepts";
 
-        public HomeUserControl HomeUserControl { get; private set; }
-        public WebBrowserUserControl WebBrowserUserControl { get; private set; }
-        public WifiSetupUserControl WifiSetupUserControl { get; private set; }
+        private WindowsFormsSynchronizationContext synchronizationContext;
+        
+        private AccountSettingsUserControl accountSettingsUserControl;
+        private AuthenticationUserControl authenticationUserControl;
+        private HomeUserControl homeUserControl;
+        private WebBrowserUserControl webBrowserUserControl;
+        private WifiSetupUserControl wifiSetupUserControl;
 
         protected override CreateParams CreateParams
         {
@@ -38,77 +42,121 @@ namespace GamePad_Intercepts.Forms
 
         public MainForm()
         {
-            HomeUserControl = new HomeUserControl();
-            HomeUserControl.Tag = "Home";
+            synchronizationContext = (WindowsFormsSynchronizationContext)SynchronizationContext.Current;
 
-            WebBrowserUserControl = new WebBrowserUserControl();
-            WebBrowserUserControl.ConfigureBrowser();
-            WebBrowserUserControl.Tag = "Browser";
-
-            WifiSetupUserControl = new WifiSetupUserControl();
-            WifiSetupUserControl.Tag = "WifiSetup";
+            accountSettingsUserControl = new AccountSettingsUserControl();
+            authenticationUserControl = new AuthenticationUserControl();
+            homeUserControl = new HomeUserControl();
+            webBrowserUserControl = new WebBrowserUserControl();
+            wifiSetupUserControl = new WifiSetupUserControl();
 
             InitializeComponent();
+
+            MessageBus.Bus.Instance.Subscribe<UIEvent>(this, OnUIEvent);
 
             this.Width = (int) (Screen.PrimaryScreen.Bounds.Width);
             this.Height = (int) (Screen.PrimaryScreen.Bounds.Height);
             this.Location = new Point(0, 0);
         }
 
-        public new void Show()
+        private new void Show()
         {
             base.Show();
-            App.MessageCenter.EnableControllerMouseKeyboardEmulation();
 
+            // When the main UI is visible, we want to be able to navigate it using the controller
+            App.MissionControl.EnableControllerMouseKeyboardEmulation();
+
+            // Enable or disable features based on current authentication state
+            metroLink_close.Visible = App.MissionControl.IsAuthenticated;
+            metroLink_back.Visible = App.MissionControl.IsAuthenticated;
+
+            // Only because i am not a fan of the arrow pointer in this context...
             Cursor = Cursors.Hand;
         }
 
-        public new void Hide()
+        private new void Hide()
         {
-            App.MessageCenter.DisableControllerMouseKeyboardEmulation();
+            App.MissionControl.DisableControllerMouseKeyboardEmulation();
             base.Hide();
         }
 
-        public void ShowHomeUserControl()
+        private void ToggleHomeScreen()
         {
-            ShowUserControl(HomeUserControl);
+            if (Visible) HideHomeScreen();
+            else ShowHomeScreen();
         }
 
-        public void ShowWebBrowserUserControl()
+        private void ShowHomeScreen()
         {
-            WebBrowserUserControl.ShowBrowser();
-            ShowUserControl(WebBrowserUserControl);
+            if (App.MissionControl.IsAuthenticated) ShowUserControl(homeUserControl);
+            else ShowUserControl(authenticationUserControl);
         }
 
-        public void ShowWifiSetupUserControl()
+        private void HideHomeScreen()
         {
-            WifiSetupUserControl.ShowWifiStatus();
-            ShowUserControl(WifiSetupUserControl);
+            // We don't want users to be able to escape the authentication screen...
+            if (!App.MissionControl.IsAuthenticated) return;
+
+            // Hiding the home screen really just means hiding the main form
+            synchronizationContext.Post(delegate { Hide(); }, null);
         }
 
         private void ShowUserControl(UserControl userControl)
         {
-            userControl.Dock = DockStyle.Fill;
+            synchronizationContext.Post(delegate
+            {
+                // Making the main form visible if necessary
+                if (!Visible)
+                {
+                    Show();
+                    User32.SetForegroundWindow(Handle);
+                }
 
-            metroPanel_controlsContainer.Controls.Clear();
-            metroPanel_controlsContainer.Controls.Add(userControl);
+                // Displaying the requested user control
+                userControl.Dock = DockStyle.Fill;
 
-            metroLabel_breadcrumb.Text = BREADCRUMB_BASE + " > " + (userControl.Tag as string);
+                metroPanel_controlsContainer.Controls.Clear();
+                metroPanel_controlsContainer.Controls.Add(userControl);
+                userControl.Focus();
 
-            userControl.Focus();
+                // Updating the breadcrumb label text
+                //metroLabel_breadcrumb.Text = BREADCRUMB_BASE + " > " + (userControl.Tag as string);
 
-            if (userControl.Tag.ToString() == HomeUserControl.Tag.ToString()) metroLink_back.Visible = false;
-            else if (userControl.Tag.ToString() == WebBrowserUserControl.Tag.ToString()) metroLink_back.Visible = true;
-            else if (userControl.Tag.ToString() == WifiSetupUserControl.Tag.ToString()) metroLink_back.Visible = true;
+                // Making the back button visible if necessary
+                if (userControl is AccountSettingsUserControl) metroLink_back.Visible = true;
+                else if (userControl is WebBrowserUserControl) metroLink_back.Visible = true;
+                else if (userControl is WifiSetupUserControl) metroLink_back.Visible = true;
+                else metroLink_back.Visible = false;
+            }, null);
+        }
+
+        private void OnUIEvent(UIEvent message)
+        {
+            if (message.Action == UIEvent.EventAction.ToggleHomeScreen) ToggleHomeScreen();
+            else if (message.Action == UIEvent.EventAction.ShowHomeScreen) ShowHomeScreen();
+            else if (message.Action == UIEvent.EventAction.HideHomeScreen) HideHomeScreen();
+            else if (message.Action == UIEvent.EventAction.ShowAccountSettings)
+            {
+                accountSettingsUserControl.Initialize();
+                ShowUserControl(accountSettingsUserControl);
+            }
+            else if (message.Action == UIEvent.EventAction.ShowWifiSettings)
+            {
+                wifiSetupUserControl.ShowWifiStatus();
+                ShowUserControl(wifiSetupUserControl);
+            }
+            else if (message.Action == UIEvent.EventAction.ShowWebBrowser)
+            {
+                webBrowserUserControl.ShowBrowser();
+                ShowUserControl(webBrowserUserControl);
+            }
         }
 
         private void metroLink_back_Click(object sender, EventArgs e)
         {
-            string currentControlTag = metroPanel_controlsContainer.Controls[0].Tag.ToString();
+            UserControl currentControl = metroPanel_controlsContainer.Controls[0] as UserControl;
 
-            if (currentControlTag == WebBrowserUserControl.Tag.ToString()) ShowHomeUserControl();
-
-            if (currentControlTag == WifiSetupUserControl.Tag.ToString()) ShowHomeUserControl();
+            if (!(currentControl is HomeUserControl)) ShowHomeScreen();
         }
 
         private void metroLink_close_Click(object sender, EventArgs e)

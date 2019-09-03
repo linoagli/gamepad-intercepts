@@ -31,8 +31,24 @@ namespace GamePad_Intercepts.Forms.UserControls.WifiSetup
         {
             flowLayoutPanel_accessPointList.Controls.Clear();
 
-            foreach (AccessPoint accessPoint in WifiManager.GetAccessPoints())
-                flowLayoutPanel_accessPointList.Controls.Add(new WifiAccessPointListItemUserControl(accessPoint, this));
+            try
+            {
+                foreach (AccessPoint accessPoint in WifiManager.GetAccessPoints())
+                {
+                    WifiAccessPointListItemUserControl control = new WifiAccessPointListItemUserControl(accessPoint, this);
+                    ResizeChildControl(control);
+                    flowLayoutPanel_accessPointList.Controls.Add(control);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Failed to load access points: " + e.Message);
+            }
+        }
+
+        private void ResizeChildControl(UserControl control)
+        {
+            control.Width = flowLayoutPanel_accessPointList.Width - control.Margin.Horizontal - 20;
         }
 
         public void ConnectToAccessPoint(AccessPoint accessPoint)
@@ -42,10 +58,12 @@ namespace GamePad_Intercepts.Forms.UserControls.WifiSetup
 
         private void flowLayoutPanel_accessPointList_Resize(object sender, EventArgs e)
         {
-            FlowLayoutPanel senderObject = (FlowLayoutPanel) sender;
+            foreach (UserControl control in ((FlowLayoutPanel)sender).Controls) ResizeChildControl(control);
+        }
 
-            foreach (Control control in senderObject.Controls)
-                control.Width = senderObject.ClientSize.Width - control.Margin.Horizontal;
+        private void metroLink_refresh_Click(object sender, EventArgs e)
+        {
+            LoadAccessPoints();
         }
     }
 }

@@ -71,13 +71,14 @@ namespace GamePad_Intercepts
         {
             if (pressedKeys.Count == 1)
             {
-                if (pressedKeys.FirstOrDefault() == Keys.VolumeUp) App.MessageCenter.VolumeUp();
-                if (pressedKeys.FirstOrDefault() == Keys.VolumeDown) App.MessageCenter.VolumeDown();
+                if (pressedKeys.FirstOrDefault() == Keys.VolumeUp) App.MissionControl.VolumeUp();
+                if (pressedKeys.FirstOrDefault() == Keys.VolumeDown) App.MissionControl.VolumeDown();
             }
             
             if (pressedKeys.Count == 3)
             {
-                if (pressedKeys.Contains(Keys.LControlKey) && pressedKeys.Contains(Keys.LMenu) && pressedKeys.Contains(Keys.H)) App.MessageCenter.ToggleHomeScreen();
+                if (pressedKeys.Contains(Keys.LControlKey) && pressedKeys.Contains(Keys.LMenu) && pressedKeys.Contains(Keys.H))
+                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
             }
         }
     }

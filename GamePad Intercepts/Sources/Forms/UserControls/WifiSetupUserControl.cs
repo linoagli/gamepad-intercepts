@@ -15,6 +15,8 @@ namespace GamePad_Intercepts.Forms.UserControls
 {
     public partial class WifiSetupUserControl : UserControl
     {
+        public const string TAG = "Wifi Setup";
+
         private WifiSetupProgressUserControl userControl_wifiSetupProgress;
         private WifiStatusUserControl userControl_wifiStatus;
         private WifiAccessPointListUserControl userControl_wifiAccessPointList;

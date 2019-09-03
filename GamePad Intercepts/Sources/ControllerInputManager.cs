@@ -64,8 +64,8 @@ namespace GamePad_Intercepts
         {
             isMouseAndKeyboardModeEnabled = !isMouseAndKeyboardModeEnabled;
 
-            if (isMouseAndKeyboardModeEnabled) App.MessageCenter.ShowStickyNotification("Mouse & Keyboard Emulation Active", TAG_MOUSE_KEYBOARD_EMULATION);
-            else App.MessageCenter.HideStickyNotification(TAG_MOUSE_KEYBOARD_EMULATION);
+            if (isMouseAndKeyboardModeEnabled) App.MissionControl.ShowStickyNotification("Mouse & Keyboard Emulation Active", TAG_MOUSE_KEYBOARD_EMULATION);
+            else App.MissionControl.HideStickyNotification(TAG_MOUSE_KEYBOARD_EMULATION);
         }
 
         private void ParsePressedDS4Buttons()
@@ -108,15 +108,16 @@ namespace GamePad_Intercepts
 
             if (pressedDS4Buttons.Count == 2)
             {
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Options)) App.MessageCenter.ToggleHomeScreen();
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Options))
+                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Share)) App.MessageCenter.AltTab();
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Share)) App.MissionControl.AltTab();
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.TouchPad)) App.MessageCenter.ToggleOnScreenKeyboard();
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.TouchPad)) App.MissionControl.ToggleOnScreenKeyboard();
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadUp)) App.MessageCenter.VolumeUp();
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadUp)) App.MissionControl.VolumeUp();
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadDown)) App.MessageCenter.VolumeDown();
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadDown)) App.MissionControl.VolumeDown();
 
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.L3)) ;
 
@@ -133,7 +134,7 @@ namespace GamePad_Intercepts
                 e.Controller.DeviceTouchPadMoved += OnDS4ControllerTouchPadMoved;
                 e.Controller.DeviceGeneralStateChanged += OnDeviceGeneralStateChanged;
 
-                App.MessageCenter.ShowNotification("DS4 Controller connected");
+                App.MissionControl.ShowNotification("DS4 Controller connected");
             }
             else
             {
@@ -144,7 +145,7 @@ namespace GamePad_Intercepts
 
                 DisableMouseKeyboardEmulation();
 
-                App.MessageCenter.ShowNotification("DS4 Controller disconnected");
+                App.MissionControl.ShowNotification("DS4 Controller disconnected");
             }
         }
 
@@ -199,17 +200,17 @@ namespace GamePad_Intercepts
             {
                 case BATTERY_THRESHOLD_LOW:
                 case BATTERY_THRESHOLD_VERY_LOW:
-                    App.MessageCenter.ShowNotification("Low controller battery warning: " + e.Battery + "%");
+                    App.MissionControl.ShowNotification("Low controller battery warning: " + e.Battery + "%");
                     break;
             }
 
             if (e.Battery <= BATTERY_THRESHOLD_CRITICAL)
             {
-                App.MessageCenter.ShowStickyNotification("Controller battery very low: " + e.Battery + "%", TAG_BATTERY_STATE);
+                App.MissionControl.ShowStickyNotification("Controller battery very low: " + e.Battery + "%", TAG_BATTERY_STATE);
             }
             else
             {
-                App.MessageCenter.HideStickyNotification(TAG_BATTERY_STATE);
+                App.MissionControl.HideStickyNotification(TAG_BATTERY_STATE);
             }
         }
     }

@@ -15,11 +15,14 @@ namespace GamePad_Intercepts.Forms.UserControls
 {
     public partial class WebBrowserUserControl : MetroFramework.Controls.MetroUserControl
     {
+        public const string TAG = "Browser";
+
         private ChromiumWebBrowser chromeBrowser;
 
         public WebBrowserUserControl()
         {
             InitializeComponent();
+            ConfigureBrowser();
         }
 
         public async void ConfigureBrowser()
