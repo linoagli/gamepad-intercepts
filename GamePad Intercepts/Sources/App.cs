@@ -69,21 +69,6 @@ namespace GamePad_Intercepts
 
         public class MissionControl
         {
-            private static bool isAuthenticated = false;
-            public static bool IsAuthenticated
-            {
-                get
-                {
-                    string accountPassword = GetAccountPassword();
-                    return isAuthenticated || (accountPassword == null || accountPassword.Length < 1);
-                }
-
-                set
-                {
-                    isAuthenticated = value;
-                }
-            }
-
             public static void ShowNotification(string message)
             {
                 Console.WriteLine("Notifying: " + message);
@@ -95,6 +80,7 @@ namespace GamePad_Intercepts
                 Console.WriteLine("Notifying sticky: " + message);
                 notificationManager.NotifySticky(message, tag);
             }
+
             public static void HideStickyNotification(string tag)
             {
                 notificationManager.DismissSticky(tag);
@@ -161,40 +147,6 @@ namespace GamePad_Intercepts
             public static void AltTab()
             {
                 messageOnlyForm.AltTab();
-            }
-
-            public static string GetAccountPassword()
-            {
-                if (!File.Exists(@"auth.dat")) return null;
-
-                return File.ReadAllText(@"auth.dat");
-            }
-
-            public static void SetAccountPassword(string password)
-            {
-                if (password == null)
-                {
-                    File.Delete(@"auth.dat");
-                }
-                else
-                {
-                    byte[] bytes = Encoding.ASCII.GetBytes(password);
-                    byte[] result = new SHA512Managed().ComputeHash(bytes);
-                    string hash = Encoding.ASCII.GetString(result);
-
-                    File.WriteAllText(@"auth.dat", hash);
-                }
-            }
-
-            public static bool CheckAgainstAccountPassword(string input)
-            {
-                if (input == null) return false;
-
-                byte[] bytes = Encoding.ASCII.GetBytes(input);
-                byte[] result = new SHA512Managed().ComputeHash(bytes);
-                string hash = Encoding.ASCII.GetString(result);
-
-                return hash == GetAccountPassword();
             }
         }
     }

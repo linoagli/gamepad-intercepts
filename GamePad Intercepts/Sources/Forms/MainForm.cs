@@ -23,8 +23,6 @@ namespace GamePad_Intercepts.Forms
 
         private WindowsFormsSynchronizationContext synchronizationContext;
         
-        private AccountSettingsUserControl accountSettingsUserControl;
-        private AuthenticationUserControl authenticationUserControl;
         private HomeUserControl homeUserControl;
         private WebBrowserUserControl webBrowserUserControl;
         private WifiSetupUserControl wifiSetupUserControl;
@@ -44,8 +42,6 @@ namespace GamePad_Intercepts.Forms
         {
             synchronizationContext = (WindowsFormsSynchronizationContext)SynchronizationContext.Current;
 
-            accountSettingsUserControl = new AccountSettingsUserControl();
-            authenticationUserControl = new AuthenticationUserControl();
             homeUserControl = new HomeUserControl();
             webBrowserUserControl = new WebBrowserUserControl();
             wifiSetupUserControl = new WifiSetupUserControl();
@@ -66,10 +62,6 @@ namespace GamePad_Intercepts.Forms
             // When the main UI is visible, we want to be able to navigate it using the controller
             App.MissionControl.EnableControllerMouseKeyboardEmulation();
 
-            // Enable or disable features based on current authentication state
-            metroLink_close.Visible = App.MissionControl.IsAuthenticated;
-            metroLink_back.Visible = App.MissionControl.IsAuthenticated;
-
             // Only because i am not a fan of the arrow pointer in this context...
             Cursor = Cursors.Hand;
         }
@@ -88,15 +80,11 @@ namespace GamePad_Intercepts.Forms
 
         private void ShowHomeScreen()
         {
-            if (App.MissionControl.IsAuthenticated) ShowUserControl(homeUserControl);
-            else ShowUserControl(authenticationUserControl);
+            ShowUserControl(homeUserControl);
         }
 
         private void HideHomeScreen()
         {
-            // We don't want users to be able to escape the authentication screen...
-            if (!App.MissionControl.IsAuthenticated) return;
-
             // Hiding the home screen really just means hiding the main form
             synchronizationContext.Post(delegate { Hide(); }, null);
         }
@@ -123,8 +111,7 @@ namespace GamePad_Intercepts.Forms
                 //metroLabel_breadcrumb.Text = BREADCRUMB_BASE + " > " + (userControl.Tag as string);
 
                 // Making the back button visible if necessary
-                if (userControl is AccountSettingsUserControl) metroLink_back.Visible = true;
-                else if (userControl is WebBrowserUserControl) metroLink_back.Visible = true;
+                if (userControl is WebBrowserUserControl) metroLink_back.Visible = true;
                 else if (userControl is WifiSetupUserControl) metroLink_back.Visible = true;
                 else metroLink_back.Visible = false;
             }, null);
@@ -135,11 +122,6 @@ namespace GamePad_Intercepts.Forms
             if (message.Action == UIEvent.EventAction.ToggleHomeScreen) ToggleHomeScreen();
             else if (message.Action == UIEvent.EventAction.ShowHomeScreen) ShowHomeScreen();
             else if (message.Action == UIEvent.EventAction.HideHomeScreen) HideHomeScreen();
-            else if (message.Action == UIEvent.EventAction.ShowAccountSettings)
-            {
-                accountSettingsUserControl.Initialize();
-                ShowUserControl(accountSettingsUserControl);
-            }
             else if (message.Action == UIEvent.EventAction.ShowWifiSettings)
             {
                 wifiSetupUserControl.ShowWifiStatus();

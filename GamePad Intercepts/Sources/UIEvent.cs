@@ -10,8 +10,10 @@ namespace GamePad_Intercepts
     {
         public enum EventAction
         {
-            ToggleHomeScreen, ShowHomeScreen, HideHomeScreen,
-            ShowAccountSettings, ShowWifiSettings,
+            ToggleHomeScreen,
+            ShowHomeScreen,
+            HideHomeScreen,
+            ShowWifiSettings,
             ShowWebBrowser
         }
 

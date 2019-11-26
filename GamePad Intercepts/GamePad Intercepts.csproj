@@ -133,12 +133,6 @@
   <ItemGroup>
     <Compile Include="Sources\App.cs" />
     <Compile Include="Sources\ControllerInputManager.cs" />
-    <Compile Include="Sources\Forms\UserControls\AccountSettingsUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Sources\Forms\UserControls\AccountSettingsUserControl.Designer.cs">
-      <DependentUpon>AccountSettingsUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Sources\Forms\UserControls\SoundSettingsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -152,12 +146,6 @@
     </Compile>
     <Compile Include="Sources\Forms\StickyNotificationForm.Designer.cs">
       <DependentUpon>StickyNotificationForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Sources\Forms\UserControls\AuthenticationUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Sources\Forms\UserControls\AuthenticationUserControl.Designer.cs">
-      <DependentUpon>AuthenticationUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_SESSIONFLAGS_XXX.cs" />
     <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_STREAMFLAGS_XXX.cs" />
@@ -369,12 +357,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Sources\Forms\StickyNotificationForm.resx">
       <DependentUpon>StickyNotificationForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sources\Forms\UserControls\AccountSettingsUserControl.resx">
-      <DependentUpon>AccountSettingsUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Sources\Forms\UserControls\AuthenticationUserControl.resx">
-      <DependentUpon>AuthenticationUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Sources\Forms\UserControls\HomeUserControl.resx">
       <DependentUpon>HomeUserControl.cs</DependentUpon>

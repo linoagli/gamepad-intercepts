@@ -43,11 +43,6 @@ namespace GamePad_Intercepts.Forms.UserControls
             }, null);
         }
 
-        private void metroTile_accountSettings_Click(object sender, EventArgs e)
-        {
-            MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowAccountSettings });
-        }
-
         private void metroTile_soundSettings_Click(object sender, EventArgs e)
         {
             Process process = Process.Start("mmsys.cpl");
