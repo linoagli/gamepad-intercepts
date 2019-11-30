@@ -102,6 +102,18 @@
     <DefineConstants>TRACE;DEBUG</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CoreAudio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\CoreAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="DS4Library, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\DS4Library.dll</HintPath>
+    </Reference>
+    <Reference Include="MessageBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\MessageBus.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
       <Private>True</Private>
@@ -129,6 +141,14 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WinApiLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\WinApiLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsInput, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\WindowsInput.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sources\App.cs" />
@@ -147,90 +167,6 @@
     <Compile Include="Sources\Forms\StickyNotificationForm.Designer.cs">
       <DependentUpon>StickyNotificationForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_SESSIONFLAGS_XXX.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\AUDCLNT_STREAMFLAGS_XXX.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\ComCLSIDs.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\ComIIDs.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\DEVICE_STATE_XXX.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\ENDPOINT_HARDWARE_SUPPORT_XXX.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Constants\PropertyKeys.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AUDCLNT_BUFFERFLAGS.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AUDCLNT_SHAREMODE.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AudioSessionDisconnectReason.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\AudioSessionState.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\ConnectorType.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\DataFlow.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\EDataFlow.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\EndpointFormFactor.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\ERole.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\KSJACK_SINK_CONNECTIONTYPE.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Enumerations\PartType.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Externals\CLSCTX.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Externals\IPropertyStore.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Externals\PROPERTYKEY.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Externals\PROPVARIANT.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Externals\STGM.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\Definitions.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioAutoGainControl.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioBass.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioCaptureClient.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioChannelConfig.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClient.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClock.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClock2.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioClockAdjustment.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolume.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolumeCallback.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioEndpointVolumeEx.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioInputSelector.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioLoudness.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMeterInformation.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMidrange.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioMute.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioOutputSelector.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioPeakMeter.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioRenderClient.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionControl.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionControl2.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionEnumerator.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionEvents.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionManager.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionManager2.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioSessionNotification.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioStreamVolume.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioTreble.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioVolumeDuckNotification.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IAudioVolumeLevel.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IChannelAudioVolume.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IConnector.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IControlChangeNotify.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IControlInterface.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IDeviceSpecificProperty.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IDeviceTopology.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsFormatSupport.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackDescription.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackDescription2.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IKsJackSinkInformation.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDevice.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDeviceCollection.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMDeviceEnumerator.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMEndpoint.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IMMNotificationClient.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPart.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPartsList.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\IPerChannelDbLevel.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\ISimpleAudioVolume.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Interfaces\ISubunit.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\AUDIO_VOLUME_NOTIFICATION_DATA.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\DIRECTX_AUDIO_ACTIVATION_PARAMS.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_DESCRIPTION.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_DESCRIPTION2.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\KSJACK_SINK_INFORMATION.cs" />
-    <Compile Include="Sources\Libraries\CoreAudio\Structures\LUID.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Controller.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4DeviceManager.cs" />
-    <Compile Include="Sources\Libraries\MessageBus.cs" />
-    <Compile Include="Sources\Libraries\WinApi\DwmApi.cs" />
     <Compile Include="Sources\Forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,42 +198,6 @@
       <DependentUpon>NotificationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Sources\KeyboardInputHandler.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Controls.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Device.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Devices.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Sixaxis.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4State.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4StateExposed.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\DS4Touchpad.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\Extensions.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\HidDevice.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\HidDeviceAttributes.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\HidDeviceCapabilities.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\HidDevices.cs" />
-    <Compile Include="Sources\Libraries\DS4Library\NativeMethods.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\IInputDeviceStateAdaptor.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\IInputMessageDispatcher.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\IInputSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\IKeyboardSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\IMouseSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\InputBuilder.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\InputSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\KeyboardSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\MouseButton.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\MouseSimulator.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\HARDWAREINPUT.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\INPUT.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\InputType.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\KEYBDINPUT.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\KeyboardFlag.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\MouseFlag.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\MOUSEINPUT.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\MOUSEKEYBDHARDWAREINPUT.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\NativeMethods.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\VirtualKeyCode.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\Native\XButton.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\WindowsInputDeviceStateAdaptor.cs" />
-    <Compile Include="Sources\Libraries\WindowsInput\WindowsInputMessageDispatcher.cs" />
     <Compile Include="Sources\MouseAndKeyboardRobot.cs" />
     <Compile Include="Sources\NotificationManager.cs" />
     <Compile Include="Sources\Program.cs" />
@@ -315,7 +215,6 @@
     </Compile>
     <Compile Include="Sources\SystemAudio.cs" />
     <Compile Include="Sources\SystemMonitor.cs" />
-    <Compile Include="Sources\Libraries\WinApi\User32.cs" />
     <Compile Include="Sources\Forms\UserControls\UserControlMetaData.cs" />
     <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListItemUserControl.cs">
       <SubType>UserControl</SubType>
@@ -422,6 +321,11 @@
     <Content Include="Assets\nircmd.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Libraries\CoreAudio.dll" />
+    <Content Include="Libraries\DS4Library.dll" />
+    <Content Include="Libraries\MessageBus.dll" />
+    <Content Include="Libraries\WinApiLibrary.dll" />
+    <Content Include="Libraries\WindowsInput.dll" />
     <None Include="Resources\ic_account_settings.png" />
     <None Include="Resources\ic_sound_settings.png" />
     <None Include="Resources\ic_refresh.png" />

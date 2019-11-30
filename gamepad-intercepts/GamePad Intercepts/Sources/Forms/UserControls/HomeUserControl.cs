@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Diagnostics;
-using WinApi;
+using WinApiLibrary;
 
 namespace GamePad_Intercepts.Forms.UserControls
 {

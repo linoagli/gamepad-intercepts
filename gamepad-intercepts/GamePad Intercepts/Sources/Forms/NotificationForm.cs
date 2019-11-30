@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using WinApi;
+using WinApiLibrary;
 
 namespace GamePad_Intercepts.Forms
 {
