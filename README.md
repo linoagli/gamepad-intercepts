@@ -1,5 +1,5 @@
 # GamePad Intercepts
-GamePad Intercepts is a project that aims to transform a Windows PC into a fully gamepad friendly gaming console.
+GamePad Intercepts is a project that aims to make Windows fully gamepad friendly.
 
 ## Project Modules
 
@@ -30,4 +30,3 @@ A Windows Credential Provider that enables logging into Windows using a gamepad.
 - MessageBus
 - WindowsInput
 
-## Licence
