@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29209.62
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamePad Intercepts Credential Provider", "GamePad Intercepts Credential Provider\GamePad Intercepts Credential Provider.vcxproj", "{C2D61BA4-3FAA-4E42-8618-85A2EE4CCCBB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamePad Intercepts Credential Provider Commons", "GamePad Intercepts Credential Provider Commons\GamePad Intercepts Credential Provider Commons.vcxproj", "{B3612C81-3DC8-435A-A6A5-7935BF5FD60C}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GamePad Intercepts Credential Provider Filter", "GamePad Intercepts Credential Provider Filter\GamePad Intercepts Credential Provider Filter.vcxproj", "{391CF023-94E5-4738-8D0E-8467D250B88C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GamePad Intercepts Authentication Module", "GamePad Intercepts Authentication Module\GamePad Intercepts Authentication Module.csproj", "{83135CFF-A0EC-4D7A-B393-1E83CE90091E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2D61BA4-3FAA-4E42-8618-85A2EE4CCCBB}.Debug|x64.ActiveCfg = Debug|x64
+		{C2D61BA4-3FAA-4E42-8618-85A2EE4CCCBB}.Debug|x64.Build.0 = Debug|x64
+		{C2D61BA4-3FAA-4E42-8618-85A2EE4CCCBB}.Release|x64.ActiveCfg = Release|x64
+		{C2D61BA4-3FAA-4E42-8618-85A2EE4CCCBB}.Release|x64.Build.0 = Release|x64
+		{B3612C81-3DC8-435A-A6A5-7935BF5FD60C}.Debug|x64.ActiveCfg = Debug|x64
+		{B3612C81-3DC8-435A-A6A5-7935BF5FD60C}.Debug|x64.Build.0 = Debug|x64
+		{B3612C81-3DC8-435A-A6A5-7935BF5FD60C}.Release|x64.ActiveCfg = Release|x64
+		{B3612C81-3DC8-435A-A6A5-7935BF5FD60C}.Release|x64.Build.0 = Release|x64
+		{391CF023-94E5-4738-8D0E-8467D250B88C}.Debug|x64.ActiveCfg = Debug|x64
+		{391CF023-94E5-4738-8D0E-8467D250B88C}.Debug|x64.Build.0 = Debug|x64
+		{391CF023-94E5-4738-8D0E-8467D250B88C}.Release|x64.ActiveCfg = Release|x64
+		{391CF023-94E5-4738-8D0E-8467D250B88C}.Release|x64.Build.0 = Release|x64
+		{83135CFF-A0EC-4D7A-B393-1E83CE90091E}.Debug|x64.ActiveCfg = Debug|x64
+		{83135CFF-A0EC-4D7A-B393-1E83CE90091E}.Release|x64.ActiveCfg = Release|x64
+		{83135CFF-A0EC-4D7A-B393-1E83CE90091E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BFCED61-2319-48A3-9242-0D37FAF3F08E}
+	EndGlobalSection
+EndGlobal

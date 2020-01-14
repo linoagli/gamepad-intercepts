@@ -29,14 +29,17 @@ namespace GamePad_Intercepts_Bootstrapper
             Process.Start(gamePadInterceptProcessInfo);
 
             // Launching Xadditus as an admin
-            ProcessStartInfo xadditusProcessInfo = new ProcessStartInfo()
+            if (File.Exists(PATH_FILE_XADDITUS))
             {
-                FileName = PATH_FILE_XADDITUS,
-                UseShellExecute = true,
-                Arguments = "",
-                Verb = "runas"
-            };
-            Process.Start(xadditusProcessInfo);
+                ProcessStartInfo xadditusProcessInfo = new ProcessStartInfo()
+                {
+                    FileName = PATH_FILE_XADDITUS,
+                    UseShellExecute = true,
+                    Arguments = "",
+                    Verb = "runas"
+                };
+                Process.Start(xadditusProcessInfo);
+            }
         }
     }
 }
