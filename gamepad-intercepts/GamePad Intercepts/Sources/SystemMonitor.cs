@@ -52,7 +52,7 @@ namespace GamePad_Intercepts
             {
                 batteryPercent = (int) (SystemInformation.PowerStatus.BatteryLifePercent * 100);
             }
-            catch (Exception e)
+            catch
             {
                 //
             }
@@ -75,7 +75,7 @@ namespace GamePad_Intercepts
             {
                 systemVolumePercent = (int) (SystemAudio.GetMasterVolumeLevel() * 100);
             }
-            catch (Exception e)
+            catch
             {
                 //
             }
@@ -105,7 +105,7 @@ namespace GamePad_Intercepts
                 }
                 else wifiStatus += "No Internet Connection";
             }
-            catch (Exception e)
+            catch
             {
                 //
             }

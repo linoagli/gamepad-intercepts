@@ -110,6 +110,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DS4Library.dll</HintPath>
     </Reference>
+    <Reference Include="Gameloop.Vdf, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Gameloop.Vdf.0.5.0\lib\net45\Gameloop.Vdf.dll</HintPath>
+    </Reference>
     <Reference Include="MessageBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\MessageBus.dll</HintPath>
@@ -159,6 +162,7 @@
     <Compile Include="Sources\Forms\UserControls\SoundSettingsUserControl.Designer.cs">
       <DependentUpon>SoundSettingsUserControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sources\SteamUtils.cs" />
     <Compile Include="Sources\UIEvent.cs" />
     <Compile Include="Sources\SystemStatusUpdateEvent.cs" />
     <Compile Include="Sources\Forms\StickyNotificationForm.cs">
@@ -228,7 +232,7 @@
     <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointListUserControl.Designer.cs">
       <DependentUpon>WifiAccessPointListUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Sources\Utils.cs" />
+    <Compile Include="Sources\ProcessUtils.cs" />
     <Compile Include="Sources\WifiManager.cs" />
     <Compile Include="Sources\Forms\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.cs">
       <SubType>UserControl</SubType>

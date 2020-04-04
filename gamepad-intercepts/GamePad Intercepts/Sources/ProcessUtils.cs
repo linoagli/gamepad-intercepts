@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GamePad_Intercepts
 {
-    class Utils
+    class ProcessUtils
     {
         public static bool IsProcessRunning(Process process)
         {

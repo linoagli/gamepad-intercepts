@@ -13,9 +13,10 @@ namespace GamePad_Intercepts
     {
         public static readonly string PATH_DIRECTORY_APP_ROOT = Path.GetDirectoryName(Application.ExecutablePath);
         public static readonly string PATH_DIRECTORY_BROWSER_CACHE = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"browserCache");
+        public static readonly string PATH_DIRECTORY_STEAM = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Steam");
         public static readonly string PATH_FILE_NIRCMD = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"Assets\nircmd.exe");
         public static readonly string PATH_FILE_ON_SCREEN_KEYBOARD = Path.Combine(PATH_DIRECTORY_APP_ROOT, @"Assets\FreeVK.exe"); // TODO: Might need to find another free or open source alternative
-        public static readonly string PATH_FILE_STEAM = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86), @"Steam\Steam.exe");
+        public static readonly string PATH_FILE_STEAM_EXECUTABLE = Path.Combine(PATH_DIRECTORY_STEAM, @"Steam.exe");
 
         private static MainForm mainForm;
         private static MessageOnlyForm messageOnlyForm;
@@ -62,7 +63,9 @@ namespace GamePad_Intercepts
             controllerInputManager = new ControllerInputManager();
             controllerInputManager.Init();
 
-            // Locking up the app and launching the main UI
+            new SteamUtils(PATH_DIRECTORY_STEAM).InstallAppBanners();
+
+            // Loading the main UI
             MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowHomeScreen });
         }
 
@@ -113,7 +116,7 @@ namespace GamePad_Intercepts
             public static void StartGamesPlatformLauncher()
             {
                 ProcessStartInfo steamProcessInfo = new ProcessStartInfo();
-                steamProcessInfo.FileName = PATH_FILE_STEAM;
+                steamProcessInfo.FileName = PATH_FILE_STEAM_EXECUTABLE;
                 steamProcessInfo.Arguments = "-bigpicture";
                 Process.Start(steamProcessInfo);
 
@@ -122,7 +125,7 @@ namespace GamePad_Intercepts
 
             public static void ToggleOnScreenKeyboard()
             {
-                if (!Utils.IsProcessRunning(onScreenKeyboardProcess))
+                if (!ProcessUtils.IsProcessRunning(onScreenKeyboardProcess))
                 {
                     onScreenKeyboardProcess = Process.Start(new ProcessStartInfo() { FileName = PATH_FILE_ON_SCREEN_KEYBOARD });
                 }
