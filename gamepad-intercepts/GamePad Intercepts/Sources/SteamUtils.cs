@@ -27,6 +27,8 @@ namespace GamePad_Intercepts
             // object path: UserLocalConfigStore>Software>Valve>Steam>Apps
             // steam header image download url: http://cdn.akamai.steamstatic.com/steam/apps/{appId}/header.jpg
 
+            // TODO: Add timestamp file and only download if last timestamp is a couple day old (maybe 3 or 5)
+
             new Thread(delegate ()
             {
                 string[] userDataDirectories = Directory.GetDirectories(Path.Combine(installationDirectoryPath, @"userdata"));
@@ -45,9 +47,41 @@ namespace GamePad_Intercepts
         private void InstallUserAppBanners(string configDirectoryPath)
         {
             string configFilePath = Path.Combine(configDirectoryPath, @"localconfig.vdf");
+
+            if (!File.Exists(configFilePath))
+            {
+                Console.WriteLine($"The config file at path <{configFilePath}> does not exist. Skipping...");
+                return;
+            }
+
             dynamic config = VdfConvert.Deserialize(File.ReadAllText(configFilePath));
 
-            string rawAppList = config.Value.Software.Valve.Steam.Apps.ToString();
+            string rawAppList = null;
+
+            try
+            {
+                rawAppList = config.Value.Software.Valve.Steam.Apps.ToString();
+            }
+            catch (KeyNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+                Console.WriteLine("Trying legacy key...");
+
+                try
+                {
+                    rawAppList = config.Value.Software.valve.Steam.Apps.ToString();
+                }
+                catch (KeyNotFoundException ee)
+                {
+                    Console.WriteLine(ee.Message);
+                }
+            }
+
+            if (rawAppList == null)
+            {
+                Console.WriteLine("Failed to read the config file. Skipping...");
+                return;
+            }
 
             Regex regex = new Regex(@"""\d*""\s*.*\{", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.Multiline);
             MatchCollection matches = regex.Matches(rawAppList);
