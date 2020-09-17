@@ -1,9 +1,9 @@
 # GamePad Intercepts
 GamePad Intercepts is a project that aims to make Windows fully gamepad friendly.
 
-![Login - Idle](https://drive.google.com/file/d/11a4ydxxTV0aK9Z6AKJN5Tn9OvT1KZHfD/view?usp=sharing)
-![Login - Pin](https://drive.google.com/file/d/1hEvBfVqWDkG_rpe4Qmz0CsvO2rVXWYUJ/view?usp=sharing)
-![Home Screen](https://drive.google.com/file/d/1_910RnCB349e9dHZZQcbWBc0JHWTd_ly/view?usp=sharing)
+![Login - Idle](https://drive.google.com/uc?export=view&id=11a4ydxxTV0aK9Z6AKJN5Tn9OvT1KZHfD)
+![Login - Pin](https://drive.google.com/uc?export=view&id=1hEvBfVqWDkG_rpe4Qmz0CsvO2rVXWYUJ)
+![Home Screen](https://drive.google.com/uc?export=view&id=1_910RnCB349e9dHZZQcbWBc0JHWTd_ly)
 
 ## Project Modules
 
