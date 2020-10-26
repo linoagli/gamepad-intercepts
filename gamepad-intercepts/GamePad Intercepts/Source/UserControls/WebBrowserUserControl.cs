@@ -25,7 +25,7 @@ namespace GamePad_Intercepts.UserControls
             ConfigureBrowser();
         }
 
-        public async void ConfigureBrowser()
+        public void ConfigureBrowser()
         {
             CefSettings settings = new CefSettings();
             settings.CachePath = App.PATH_DIRECTORY_BROWSER_CACHE;
@@ -34,8 +34,6 @@ namespace GamePad_Intercepts.UserControls
             settings.CefCommandLineArgs.Add("persist_session_cookies", "1");
 
             Cef.Initialize(settings);
-
-            foreach (var i in (await Cef.GetPlugins())) Console.WriteLine(i.Description);
 
             chromeBrowser = new ChromiumWebBrowser("https://www.google.com/");
             chromeBrowser.AddressChanged += chromeBrowser_AddressChanged;

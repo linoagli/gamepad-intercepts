@@ -12,7 +12,6 @@ namespace GamePad_Intercepts_Bootstrapper
     class App : ApplicationContext
     {
         public static readonly string PATH_FILE_GAMEPAD_INTERCEPTS = @"C:\GamePad Intercepts\bin\GamePad Intercepts.exe";
-        public static readonly string PATH_FILE_XADDITUS = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"xadditus_app\xadditus_app.exe");
 
         public App()
         {
@@ -27,19 +26,6 @@ namespace GamePad_Intercepts_Bootstrapper
                 Verb = "runas"
             };
             Process.Start(gamePadInterceptProcessInfo);
-
-            // Launching Xadditus as an admin
-            if (File.Exists(PATH_FILE_XADDITUS))
-            {
-                ProcessStartInfo xadditusProcessInfo = new ProcessStartInfo()
-                {
-                    FileName = PATH_FILE_XADDITUS,
-                    UseShellExecute = true,
-                    Arguments = "",
-                    Verb = "runas"
-                };
-                Process.Start(xadditusProcessInfo);
-            }
         }
     }
 }

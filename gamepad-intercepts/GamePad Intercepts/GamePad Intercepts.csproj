@@ -100,6 +100,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <PlatformTarget>x64</PlatformTarget>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <OutputPath>bin %28Debug - x64%29\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CoreAudio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -213,7 +214,6 @@
       <DependentUpon>NotificationForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\KeyboardInputHandler.cs" />
-    <Compile Include="Source\MouseAndKeyboardRobot.cs" />
     <Compile Include="Source\NotificationManager.cs" />
     <Compile Include="Source\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
