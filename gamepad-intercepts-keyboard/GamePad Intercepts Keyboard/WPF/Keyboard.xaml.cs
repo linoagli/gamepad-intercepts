@@ -1,21 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace GamePad_Intercepts_Keyboard
+namespace GamePad_Intercepts_Keyboard.WPF
 {
-    public partial class Keyboard : UserControl
+    /// <summary>
+    /// Interaction logic for KeyboardWPF.xaml
+    /// </summary>
+    public partial class Keyboard : UserControl, IKeyboard
     {
-        private IEnumerable<Key> keys;
-        private Key selectedKey;
+        private IEnumerable<IKey> keys;
+        private IKey selectedKey;
         private InputSimulator inputSimulator;
 
         public Keyboard()
@@ -25,8 +33,9 @@ namespace GamePad_Intercepts_Keyboard
             InitializeComponent();
             ConfigureKeys();
 
-            keys = Controls.OfType<Key>();
+            keys = grid_keys.Children.OfType<IKey>();
 
+            // Defaulting selected key to G (closest to the middle of the board)
             NavigateKeys(key_charG.Config.CoordinateX, key_charG.Config.CoordinateY);
         }
 
@@ -101,7 +110,7 @@ namespace GamePad_Intercepts_Keyboard
             //
             // Num keys row
             //
-            key_num1.Config = new Key.KeyConfig
+            key_num1.Config = new KeyConfig
             {
                 CoordinateX = 0,
                 CoordinateY = 0,
@@ -110,7 +119,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_1
             };
 
-            key_num2.Config = new Key.KeyConfig
+            key_num2.Config = new KeyConfig
             {
                 CoordinateX = 1,
                 CoordinateY = 0,
@@ -119,7 +128,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_2
             };
 
-            key_num3.Config = new Key.KeyConfig
+            key_num3.Config = new KeyConfig
             {
                 CoordinateX = 2,
                 CoordinateY = 0,
@@ -128,7 +137,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_3
             };
 
-            key_num4.Config = new Key.KeyConfig
+            key_num4.Config = new KeyConfig
             {
                 CoordinateX = 3,
                 CoordinateY = 0,
@@ -137,7 +146,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_4
             };
 
-            key_num5.Config = new Key.KeyConfig
+            key_num5.Config = new KeyConfig
             {
                 CoordinateX = 4,
                 CoordinateY = 0,
@@ -146,7 +155,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_5
             };
 
-            key_num6.Config = new Key.KeyConfig
+            key_num6.Config = new KeyConfig
             {
                 CoordinateX = 5,
                 CoordinateY = 0,
@@ -155,7 +164,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_6
             };
 
-            key_num7.Config = new Key.KeyConfig
+            key_num7.Config = new KeyConfig
             {
                 CoordinateX = 6,
                 CoordinateY = 0,
@@ -164,7 +173,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_7
             };
 
-            key_num8.Config = new Key.KeyConfig
+            key_num8.Config = new KeyConfig
             {
                 CoordinateX = 7,
                 CoordinateY = 0,
@@ -173,7 +182,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_8
             };
 
-            key_num9.Config = new Key.KeyConfig
+            key_num9.Config = new KeyConfig
             {
                 CoordinateX = 8,
                 CoordinateY = 0,
@@ -182,7 +191,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_9
             };
 
-            key_num0.Config = new Key.KeyConfig
+            key_num0.Config = new KeyConfig
             {
                 CoordinateX = 9,
                 CoordinateY = 0,
@@ -194,7 +203,7 @@ namespace GamePad_Intercepts_Keyboard
             //
             // Character keys row 1
             //
-            key_charQ.Config = new Key.KeyConfig
+            key_charQ.Config = new KeyConfig
             {
                 CoordinateX = 0,
                 CoordinateY = 1,
@@ -203,7 +212,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_Q
             };
 
-            key_charW.Config = new Key.KeyConfig
+            key_charW.Config = new KeyConfig
             {
                 CoordinateX = 1,
                 CoordinateY = 1,
@@ -212,7 +221,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_W
             };
 
-            key_charE.Config = new Key.KeyConfig
+            key_charE.Config = new KeyConfig
             {
                 CoordinateX = 2,
                 CoordinateY = 1,
@@ -221,7 +230,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_E
             };
 
-            key_charR.Config = new Key.KeyConfig
+            key_charR.Config = new KeyConfig
             {
                 CoordinateX = 3,
                 CoordinateY = 1,
@@ -230,7 +239,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_R
             };
 
-            key_charT.Config = new Key.KeyConfig
+            key_charT.Config = new KeyConfig
             {
                 CoordinateX = 4,
                 CoordinateY = 1,
@@ -239,7 +248,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_T
             };
 
-            key_charY.Config = new Key.KeyConfig
+            key_charY.Config = new KeyConfig
             {
                 CoordinateX = 5,
                 CoordinateY = 1,
@@ -248,7 +257,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_Y
             };
 
-            key_charU.Config = new Key.KeyConfig
+            key_charU.Config = new KeyConfig
             {
                 CoordinateX = 6,
                 CoordinateY = 1,
@@ -257,7 +266,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_U
             };
 
-            key_charI.Config = new Key.KeyConfig
+            key_charI.Config = new KeyConfig
             {
                 CoordinateX = 7,
                 CoordinateY = 1,
@@ -269,7 +278,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_4
             };
 
-            key_charO.Config = new Key.KeyConfig
+            key_charO.Config = new KeyConfig
             {
                 CoordinateX = 8,
                 CoordinateY = 1,
@@ -281,7 +290,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_6
             };
 
-            key_charP.Config = new Key.KeyConfig
+            key_charP.Config = new KeyConfig
             {
                 CoordinateX = 9,
                 CoordinateY = 1,
@@ -296,7 +305,7 @@ namespace GamePad_Intercepts_Keyboard
             //
             // Character keys row 2
             //
-            key_charA.Config = new Key.KeyConfig
+            key_charA.Config = new KeyConfig
             {
                 CoordinateX = 0,
                 CoordinateY = 2,
@@ -305,7 +314,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_A
             };
 
-            key_charS.Config = new Key.KeyConfig
+            key_charS.Config = new KeyConfig
             {
                 CoordinateX = 1,
                 CoordinateY = 2,
@@ -314,7 +323,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_S
             };
 
-            key_charD.Config = new Key.KeyConfig
+            key_charD.Config = new KeyConfig
             {
                 CoordinateX = 2,
                 CoordinateY = 2,
@@ -323,7 +332,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_D
             };
 
-            key_charF.Config = new Key.KeyConfig
+            key_charF.Config = new KeyConfig
             {
                 CoordinateX = 3,
                 CoordinateY = 2,
@@ -332,7 +341,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_F
             };
 
-            key_charG.Config = new Key.KeyConfig
+            key_charG.Config = new KeyConfig
             {
                 CoordinateX = 4,
                 CoordinateY = 2,
@@ -341,7 +350,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_G
             };
 
-            key_charH.Config = new Key.KeyConfig
+            key_charH.Config = new KeyConfig
             {
                 CoordinateX = 5,
                 CoordinateY = 2,
@@ -350,7 +359,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_H
             };
 
-            key_charJ.Config = new Key.KeyConfig
+            key_charJ.Config = new KeyConfig
             {
                 CoordinateX = 6,
                 CoordinateY = 2,
@@ -359,7 +368,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_J
             };
 
-            key_charK.Config = new Key.KeyConfig
+            key_charK.Config = new KeyConfig
             {
                 CoordinateX = 7,
                 CoordinateY = 2,
@@ -371,7 +380,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_1
             };
 
-            key_charL.Config = new Key.KeyConfig
+            key_charL.Config = new KeyConfig
             {
                 CoordinateX = 8,
                 CoordinateY = 2,
@@ -383,7 +392,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_7
             };
 
-            specialKey_specialCharacters.Config = new Key.KeyConfig
+            specialKey_specialCharacters.Config = new KeyConfig
             {
                 CoordinateX = 9,
                 CoordinateY = 2,
@@ -393,7 +402,7 @@ namespace GamePad_Intercepts_Keyboard
             //
             // Character keys row 2
             //
-            key_charZ.Config = new Key.KeyConfig
+            key_charZ.Config = new KeyConfig
             {
                 CoordinateX = 0,
                 CoordinateY = 3,
@@ -402,7 +411,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_Z
             };
 
-            key_charX.Config = new Key.KeyConfig
+            key_charX.Config = new KeyConfig
             {
                 CoordinateX = 1,
                 CoordinateY = 3,
@@ -411,7 +420,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_X
             };
 
-            key_charC.Config = new Key.KeyConfig
+            key_charC.Config = new KeyConfig
             {
                 CoordinateX = 2,
                 CoordinateY = 3,
@@ -420,7 +429,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_C
             };
 
-            key_charV.Config = new Key.KeyConfig
+            key_charV.Config = new KeyConfig
             {
                 CoordinateX = 3,
                 CoordinateY = 3,
@@ -429,7 +438,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_V
             };
 
-            key_charB.Config = new Key.KeyConfig
+            key_charB.Config = new KeyConfig
             {
                 CoordinateX = 4,
                 CoordinateY = 3,
@@ -438,7 +447,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_B
             };
 
-            key_charN.Config = new Key.KeyConfig
+            key_charN.Config = new KeyConfig
             {
                 CoordinateX = 5,
                 CoordinateY = 3,
@@ -447,7 +456,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.VK_N
             };
 
-            key_charM.Config = new Key.KeyConfig
+            key_charM.Config = new KeyConfig
             {
                 CoordinateX = 6,
                 CoordinateY = 3,
@@ -459,7 +468,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_MINUS
             };
 
-            key_charComma.Config = new Key.KeyConfig
+            key_charComma.Config = new KeyConfig
             {
                 CoordinateX = 7,
                 CoordinateY = 3,
@@ -471,7 +480,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_PLUS
             };
 
-            key_charPeriod.Config = new Key.KeyConfig
+            key_charPeriod.Config = new KeyConfig
             {
                 CoordinateX = 8,
                 CoordinateY = 3,
@@ -483,7 +492,7 @@ namespace GamePad_Intercepts_Keyboard
                 SpecialKeyCode = VirtualKeyCode.OEM_2
             };
 
-            specialKey_delete.Config = new Key.KeyConfig
+            specialKey_delete.Config = new KeyConfig
             {
                 CoordinateX = 9,
                 CoordinateY = 3,
@@ -494,14 +503,14 @@ namespace GamePad_Intercepts_Keyboard
             //
             // Special keys row
             //
-            specialKey_shift.Config = new Key.KeyConfig
+            specialKey_shift.Config = new KeyConfig
             {
                 CoordinateX = 0,
                 CoordinateY = 4,
                 Label = "shift"
             };
 
-            specialKey_tab.Config = new Key.KeyConfig
+            specialKey_tab.Config = new KeyConfig
             {
                 CoordinateX = 1,
                 CoordinateY = 4,
@@ -509,7 +518,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.TAB
             };
 
-            specialKey_space.Config = new Key.KeyConfig
+            specialKey_space.Config = new KeyConfig
             {
                 CoordinateX = 3,
                 CoordinateY = 4,
@@ -517,7 +526,7 @@ namespace GamePad_Intercepts_Keyboard
                 KeyCode = VirtualKeyCode.SPACE
             };
 
-            specialKey_enter.Config = new Key.KeyConfig
+            specialKey_enter.Config = new KeyConfig
             {
                 CoordinateX = 8,
                 CoordinateY = 4,
@@ -535,7 +544,7 @@ namespace GamePad_Intercepts_Keyboard
                 ? new Point(selectedKey.Config.CoordinateX + dx, selectedKey.Config.CoordinateY + dy)
                 : new Point(dx, dy);
 
-            Key nextKey;
+            IKey nextKey;
 
             if (dx > 0)
             {
@@ -566,9 +575,9 @@ namespace GamePad_Intercepts_Keyboard
             selectedKey = nextKey;
         }
 
-        private void SimulateInputForKey(Key key)
+        private void SimulateInputForKey(IKey key)
         {
-            if (key.IsSpecialActivated)
+            if (key.IsFnActivated)
             {
                 if (key.Config.SpecialKeyCode != 0)
                 {
@@ -592,7 +601,6 @@ namespace GamePad_Intercepts_Keyboard
                 {
                     inputSimulator.Keyboard.KeyPress(key.Config.KeyCode);
                 }
-
             }
         }
 
@@ -600,7 +608,7 @@ namespace GamePad_Intercepts_Keyboard
         {
             bool isActive = specialKey_shift.ToggleSpecialFeature();
 
-            foreach (Key key in keys)
+            foreach (IKey key in keys)
             {
                 key.IsShiftActivated = isActive;
             }
@@ -610,9 +618,9 @@ namespace GamePad_Intercepts_Keyboard
         {
             bool isActive = specialKey_specialCharacters.ToggleSpecialFeature();
 
-            foreach (Key key in keys)
+            foreach (IKey key in keys)
             {
-                key.IsSpecialActivated = isActive;
+                key.IsFnActivated = isActive;
             }
         }
     }

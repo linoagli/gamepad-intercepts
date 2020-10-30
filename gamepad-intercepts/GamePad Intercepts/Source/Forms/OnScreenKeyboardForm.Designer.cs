@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.keyboard = new GamePad_Intercepts_Keyboard.Keyboard();
+            this.keyboard = new GamePad_Intercepts_Keyboard.WinForms.Keyboard();
             this.SuspendLayout();
             // 
             // keyboard
@@ -63,6 +63,6 @@
 
         #endregion
 
-        private GamePad_Intercepts_Keyboard.Keyboard keyboard;
+        private GamePad_Intercepts_Keyboard.WinForms.Keyboard keyboard;
     }
 }

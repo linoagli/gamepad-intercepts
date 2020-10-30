@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using WindowsInput.Native;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
-namespace GamePad_Intercepts_Keyboard
+namespace GamePad_Intercepts_Keyboard.WPF
 {
-    internal partial class Key : UserControl
+    /// <summary>
+    /// Interaction logic for KeyWPF.xaml
+    /// </summary>
+    public partial class Key : UserControl, IKey
     {
+        private readonly Color idleBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF0C060F");
+        private readonly Color activeBackgroundColor = (Color)ColorConverter.ConvertFromString("#FF290EA1");
+
         private KeyConfig _config;
         public KeyConfig Config
         {
@@ -43,7 +53,7 @@ namespace GamePad_Intercepts_Keyboard
 
                 _isSelected = value;
 
-                panel_background.BackColor = (_isSelected) ? Color.Gray : Color.Black;
+                grid_background.Background = new SolidColorBrush((_isSelected) ? activeBackgroundColor : idleBackgroundColor);
             }
         }
 
@@ -65,19 +75,19 @@ namespace GamePad_Intercepts_Keyboard
             }
         }
 
-        private bool _isSpecialActivated = false;
-        public bool IsSpecialActivated
+        private bool _isFnActivated = false;
+        public bool IsFnActivated 
         {
-            get => _isSpecialActivated;
+            get => _isFnActivated;
 
             set
             {
-                if (value ==_isSpecialActivated)
+                if (value == _isFnActivated)
                 {
                     return;
                 }
 
-                _isSpecialActivated = value;
+                _isFnActivated = value;
 
                 UpdateDisplay();
             }
@@ -88,47 +98,29 @@ namespace GamePad_Intercepts_Keyboard
             InitializeComponent();
         }
 
-        protected virtual void UpdateDisplay()
+        private void UpdateDisplay()
         {
-            if (_isSpecialActivated)
+            if (_isFnActivated)
             {
                 if (_isShiftActivated)
                 {
-                    label_character.Text = _config.SpecialShiftLabel;
+                    label_character.Content = _config.SpecialShiftLabel;
                 }
                 else
                 {
-                    label_character.Text = _config.SpecialLabel;
+                    label_character.Content = _config.SpecialLabel;
                 }
             }
             else
             {
                 if (_isShiftActivated)
                 {
-                    label_character.Text = _config.ShiftLabel;
+                    label_character.Content = _config.ShiftLabel;
                 }
                 else
                 {
-                    label_character.Text = _config.Label;
+                    label_character.Content = _config.Label;
                 }
-            }
-        }
-
-        public class KeyConfig
-        {
-            public int CoordinateX { get; set; } = -1;
-            public int CoordinateY { get; set; } = -1;
-            public string Label { get; set; } = "";
-            public string ShiftLabel { get; set; } = "";
-            public string SpecialLabel { get; set; } = "";
-            public string SpecialShiftLabel { get; set; } = "";
-            public VirtualKeyCode KeyCode { get; set; }
-            public VirtualKeyCode SpecialKeyCode { get; set; }
-
-            public override string ToString()
-            {
-                return String.Format("Key.Config: coord={0},{1}; label={2}, shiftLabel={3}, specialLabel={4}, specialShiftLabel={5}",
-                    CoordinateX, CoordinateY, Label, ShiftLabel, SpecialLabel, SpecialShiftLabel);
             }
         }
     }

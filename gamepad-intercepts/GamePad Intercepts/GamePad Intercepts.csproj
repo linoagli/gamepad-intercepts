@@ -114,9 +114,9 @@
     <Reference Include="Gameloop.Vdf, Version=0.5.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Gameloop.Vdf.0.5.0\lib\net45\Gameloop.Vdf.dll</HintPath>
     </Reference>
-    <Reference Include="GamePad Intercepts Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="GamePad_Intercepts_Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libraries\GamePad Intercepts Keyboard.dll</HintPath>
+      <HintPath>Libraries\GamePad_Intercepts_Keyboard.dll</HintPath>
     </Reference>
     <Reference Include="MessageBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -338,7 +338,7 @@
     </Content>
     <Content Include="Libraries\CoreAudio.dll" />
     <Content Include="Libraries\DS4Library.dll" />
-    <Content Include="Libraries\GamePad Intercepts Keyboard.dll" />
+    <Content Include="Libraries\GamePad_Intercepts_Keyboard.dll" />
     <Content Include="Libraries\MessageBus.dll" />
     <Content Include="Libraries\WinApiLibrary.dll" />
     <Content Include="Libraries\WindowsInput.dll" />
