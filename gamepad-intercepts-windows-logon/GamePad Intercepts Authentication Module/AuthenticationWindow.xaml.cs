@@ -42,11 +42,11 @@ namespace GamePad_Intercepts_Authentication_Module
             ProgressMode(startingMode);
 
             Bus.Instance.Subscribe<string>(this, HandleMessageBusMessages);
-            Bus.Instance.Publish(MessageBusEvents.DISABLE_MOUSE_KEYBOARD_EMULATION);
+            Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_MODE_PIN_PAD);
         }
         public new void Close()
         {
-            Bus.Instance.Publish(MessageBusEvents.ENABLE_MOUSE_KEYBOARD_EMULATION);
+            Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_MODE_MOUSE_AND_KEYBOARD);
             Bus.Instance.Unsubscribe(this);
 
             PasswordBoxPin.Clear();

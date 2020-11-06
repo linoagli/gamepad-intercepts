@@ -42,5 +42,14 @@ namespace GamePad_Intercepts_Authentication_Module
 
             isAuthenticated = authenticationWindow.IsAuthenticated;
         }
+
+        public void RequestPassword(IntPtr wHndlParent, [MarshalAs(UnmanagedType.LPWStr)] ref string username, [MarshalAs(UnmanagedType.LPWStr)] out string password)
+        {
+            PasswordRequestWindow passwordRequestWindow = new PasswordRequestWindow(username);
+            new WindowInteropHelper(passwordRequestWindow).Owner = wHndlParent;
+            passwordRequestWindow.ShowDialog();
+
+            password = passwordRequestWindow.Password;
+        }
     }
 }

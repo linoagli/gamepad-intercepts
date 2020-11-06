@@ -251,55 +251,62 @@ HRESULT CGPICredential::GetSerialization(_Out_ CREDENTIAL_PROVIDER_GET_SERIALIZA
 	// CredPackAuthenticationBuffer() cannot be used because it won't work with unlock scenario.
 	if (_fIsLocalUser)
 	{
-		PWSTR pwzProtectedPassword;
-		//hr = ProtectIfNecessaryAndCopyPassword(_rgFieldStrings[SFI_PASSWORD], _cpus, &pwzProtectedPassword);
-		hr = ProtectIfNecessaryAndCopyPassword(L"", _cpus, &pwzProtectedPassword);
+		PWSTR pszDomain;
+		PWSTR pszUsername;
+		hr = SplitDomainAndUsername(_pszQualifiedUserName, &pszDomain, &pszUsername);
 		if (SUCCEEDED(hr))
 		{
-			PWSTR pszDomain;
-			PWSTR pszUsername;
-			hr = SplitDomainAndUsername(_pszQualifiedUserName, &pszDomain, &pszUsername);
-			if (SUCCEEDED(hr))
+			HWND hwnd;
+			_pCredProvCredentialEvents->OnCreatingWindow(&hwnd);
+
+			if (_pGPICredentialProvider->IsGPIAuthModuleReady())
 			{
-				KERB_INTERACTIVE_UNLOCK_LOGON kiul;
-				hr = KerbInteractiveUnlockLogonInit(pszDomain, pszUsername, pwzProtectedPassword, _cpus, &kiul);
+				PWSTR pwzRequestedPassword;
+				_pGPICredentialProvider->GetGPIAuthModulePtr()->RequestPassword((LONG_PTR)hwnd, &pszUsername, &pwzRequestedPassword);
+
+				PWSTR pwzProtectedPassword;
+				hr = ProtectIfNecessaryAndCopyPassword(pwzRequestedPassword, _cpus, &pwzProtectedPassword);
 				if (SUCCEEDED(hr))
 				{
-					// We use KERB_INTERACTIVE_UNLOCK_LOGON in both unlock and logon scenarios.  It contains a
-					// KERB_INTERACTIVE_LOGON to hold the creds plus a LUID that is filled in for us by Winlogon
-					// as necessary.
-					hr = KerbInteractiveUnlockLogonPack(kiul, &pcpcs->rgbSerialization, &pcpcs->cbSerialization);
+					KERB_INTERACTIVE_UNLOCK_LOGON kiul;
+					hr = KerbInteractiveUnlockLogonInit(pszDomain, pszUsername, pwzProtectedPassword, _cpus, &kiul);
 					if (SUCCEEDED(hr))
 					{
-						ULONG ulAuthPackage;
-						hr = RetrieveNegotiateAuthPackage(&ulAuthPackage);
+						hr = KerbInteractiveUnlockLogonPack(kiul, &pcpcs->rgbSerialization, &pcpcs->cbSerialization);
 						if (SUCCEEDED(hr))
 						{
-							pcpcs->ulAuthenticationPackage = ulAuthPackage;
-							pcpcs->clsidCredentialProvider = CLSID_CGamePadIntercepts;
-
-							HWND hwnd;
-							_pCredProvCredentialEvents->OnCreatingWindow(&hwnd);
-
-							if (_pGPICredentialProvider->IsGPIAuthModuleReady())
+							ULONG ulAuthPackage;
+							hr = RetrieveNegotiateAuthPackage(&ulAuthPackage);
+							if (SUCCEEDED(hr))
 							{
-								VARIANT_BOOL vbIsAuthenticated = VARIANT_FALSE;
-								_pGPICredentialProvider->GetGPIAuthModulePtr()->Authenticate((LONG_PTR)hwnd, &pszUsername, &vbIsAuthenticated);
+								pcpcs->ulAuthenticationPackage = ulAuthPackage;
+								pcpcs->clsidCredentialProvider = CLSID_CGamePadIntercepts;
 
-								*pcpgsr = (vbIsAuthenticated == VARIANT_TRUE) ? CPGSR_RETURN_CREDENTIAL_FINISHED : CPGSR_NO_CREDENTIAL_FINISHED;
+								*pcpgsr = CPGSR_RETURN_CREDENTIAL_FINISHED;
 							}
-							else
-							{
-								*pcpgsr = CPGSR_NO_CREDENTIAL_FINISHED;
-							}
+						}
+						else
+						{
+							*pcpgsr = CPGSR_NO_CREDENTIAL_FINISHED;
 						}
 					}
 				}
-				CoTaskMemFree(pszDomain);
-				CoTaskMemFree(pszUsername);
+
+				CoTaskMemFree(pwzProtectedPassword);
+
+				size_t lenRequestedPassword = wcslen(pwzRequestedPassword);
+				SecureZeroMemory(pwzRequestedPassword, lenRequestedPassword * sizeof(*pwzRequestedPassword));
+				CoTaskMemFree(pwzRequestedPassword);
 			}
-			CoTaskMemFree(pwzProtectedPassword);
+			else
+			{
+				FAILED(hr);
+				*pcpgsr = CPGSR_NO_CREDENTIAL_FINISHED;
+			}
 		}
+
+		CoTaskMemFree(pszDomain);
+		CoTaskMemFree(pszUsername);		
 	}
 
 	return hr;

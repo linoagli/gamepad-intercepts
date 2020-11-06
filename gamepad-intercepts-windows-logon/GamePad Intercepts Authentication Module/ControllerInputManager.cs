@@ -13,19 +13,23 @@ namespace GamePad_Intercepts_Authentication_Module
 {
     class ControllerInputManager
     {
-        private const float MOUSE_SPEED_MULTIPLIER = 1.5f;
+        enum Mode { MouseAndKeyboard, OnScreenKeyboard, PinPad }
 
-        public bool IsMouseAndKeyboardModeEnabled { get; set; } = true;
+        private const float MOUSE_SPEED_MULTIPLIER = 1.5f;
 
         private DS4DeviceManager ds4DeviceManager;
         private HashSet<DS4Controls.Button> pressedDS4Buttons;
         private InputSimulator inputSimulator;
+
+        private Mode mode;
 
         public ControllerInputManager()
         {
             ds4DeviceManager = new DS4DeviceManager();
             pressedDS4Buttons = new HashSet<DS4Controls.Button>();
             inputSimulator = new InputSimulator();
+
+            mode = Mode.MouseAndKeyboard;
         }
 
         public void Init()
@@ -45,13 +49,17 @@ namespace GamePad_Intercepts_Authentication_Module
 
         private void HandleMessageBusMessages(string message)
         {
-            if (message == MessageBusEvents.ENABLE_MOUSE_KEYBOARD_EMULATION)
+            if (message == MessageBusEvents.CONTROLLER_INPUT_MODE_MOUSE_AND_KEYBOARD)
             {
-                IsMouseAndKeyboardModeEnabled = true;
+                mode = Mode.MouseAndKeyboard;
             }
-            else if (message == MessageBusEvents.DISABLE_MOUSE_KEYBOARD_EMULATION)
+            else if (message == MessageBusEvents.CONTROLLER_INPUT_MODE_ON_SCREEN_KEYBOARD)
             {
-                IsMouseAndKeyboardModeEnabled = false;
+                mode = Mode.OnScreenKeyboard;
+            }
+            else if (message == MessageBusEvents.CONTROLLER_INPUT_MODE_PIN_PAD)
+            {
+                mode = Mode.PinPad;
             }
         }
 
@@ -59,7 +67,7 @@ namespace GamePad_Intercepts_Authentication_Module
         {
             if (pressedDS4Buttons.Count == 1)
             {
-                if (IsMouseAndKeyboardModeEnabled)
+                if (mode == Mode.MouseAndKeyboard)
                 {
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.TouchPad) inputSimulator.Mouse.LeftButtonClick();
 
@@ -69,7 +77,31 @@ namespace GamePad_Intercepts_Authentication_Module
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.R2) inputSimulator.Mouse.RightButtonClick();
                 }
-                else
+                else if (mode == Mode.OnScreenKeyboard)
+                {
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.DpadLeft) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_LEFT);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.DpadUp) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_UP);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.DpadRight) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_RIGHT);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.DpadDown) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_DOWN);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Cross) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CROSS);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Square) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_SQUARE);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Triangle) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_TRIANGLE);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Circle) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CIRCLE);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.R1) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R1);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.L1) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L1);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Options) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_START);
+                }
+                else if (mode == Mode.PinPad)
                 {
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.DpadLeft) SendKeyMessage("1");
@@ -150,16 +182,16 @@ namespace GamePad_Intercepts_Authentication_Module
         {
             if (e.Analog == DS4Controls.Analog.LeftThumbStick)
             {
-                if (IsMouseAndKeyboardModeEnabled)
+                if (mode == Mode.MouseAndKeyboard)
                 {
-                    inputSimulator.Mouse.HorizontalScroll((int) (e.Value[0] * MOUSE_SPEED_MULTIPLIER / 64));
-                    inputSimulator.Mouse.VerticalScroll(- (int) (e.Value[1] * MOUSE_SPEED_MULTIPLIER / 64));
+                    inputSimulator.Mouse.HorizontalScroll((int)(e.Value[0] * MOUSE_SPEED_MULTIPLIER / 64));
+                    inputSimulator.Mouse.VerticalScroll(-(int)(e.Value[1] * MOUSE_SPEED_MULTIPLIER / 64));
                 }
             }
 
             if (e.Analog == DS4Controls.Analog.RightThumbStick)
             {
-                if (IsMouseAndKeyboardModeEnabled)
+                if (mode == Mode.MouseAndKeyboard)
                 {
                     inputSimulator.Mouse.MoveMouseBy((int)(e.Value[0] * MOUSE_SPEED_MULTIPLIER / 32), (int)(e.Value[1] * MOUSE_SPEED_MULTIPLIER / 32));
                 }
@@ -168,7 +200,7 @@ namespace GamePad_Intercepts_Authentication_Module
 
         private void OnDS4ControllerTouchPadMoved(object sender, DS4Controller.DeviceTouchPadMovedEventArgs e)
         {
-            if (IsMouseAndKeyboardModeEnabled)
+            if (mode == Mode.MouseAndKeyboard)
             {
                 inputSimulator.Mouse.MoveMouseBy((int)(e.DeltaX * MOUSE_SPEED_MULTIPLIER / 2), (int)(e.DeltaY * MOUSE_SPEED_MULTIPLIER / 2));
             }

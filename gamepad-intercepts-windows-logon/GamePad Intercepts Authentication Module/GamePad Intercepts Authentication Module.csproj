@@ -21,7 +21,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RegisterForComInterop>false</RegisterForComInterop>
+    <RegisterForComInterop>true</RegisterForComInterop>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -50,6 +50,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\DS4Library.dll</HintPath>
     </Reference>
+    <Reference Include="GamePad_Intercepts_Keyboard, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\GamePad_Intercepts_Keyboard.dll</HintPath>
+    </Reference>
     <Reference Include="MessageBus, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\MessageBus.dll</HintPath>
@@ -76,6 +80,9 @@
   <ItemGroup>
     <Compile Include="ControllerInputManager.cs" />
     <Compile Include="MessageBusEvents.cs" />
+    <Compile Include="PasswordRequestWindow.xaml.cs">
+      <DependentUpon>PasswordRequestWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StatusBarForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,6 +101,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PasswordRequestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="StatusBarForm.resx">
@@ -102,6 +113,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libraries\DS4Library.dll" />
+    <Content Include="Libraries\GamePad_Intercepts_Keyboard.dll" />
     <Content Include="Libraries\MessageBus.dll" />
     <Content Include="Libraries\WindowsInput.dll" />
   </ItemGroup>

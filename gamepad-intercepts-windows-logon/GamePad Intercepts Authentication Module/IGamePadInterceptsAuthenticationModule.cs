@@ -19,5 +19,8 @@ namespace GamePad_Intercepts_Authentication_Module
 
         [DispId(3)]
         void Authenticate(IntPtr wHndlParent, [MarshalAs(UnmanagedType.LPWStr)] ref string username, out bool isAuthenticated);
+
+        [DispId(4)]
+        void RequestPassword(IntPtr wHndlParent, [MarshalAs(UnmanagedType.LPWStr)] ref string username, [MarshalAs(UnmanagedType.LPWStr)] out string password);
     }
 }
