@@ -76,6 +76,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>.\WindowsInput.dll</HintPath>
     </Reference>
+    <Reference Include="XInputDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\XInputDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerInputManager.cs" />
@@ -116,6 +120,12 @@
     <Content Include="Libraries\GamePad_Intercepts_Keyboard.dll" />
     <Content Include="Libraries\MessageBus.dll" />
     <Content Include="Libraries\WindowsInput.dll" />
+    <Content Include="Libraries\XInputDotNet.dll" />
+    <ContentWithTargetPath Include="Libraries\XInputInterface.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>XInputInterface.dll</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Libraries\XInputInterface.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

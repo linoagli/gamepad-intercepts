@@ -4,10 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
 using WindowsInput.Native;
+using XInputDotNet;
 
 namespace GamePad_Intercepts_Authentication_Module
 {
@@ -15,10 +17,12 @@ namespace GamePad_Intercepts_Authentication_Module
     {
         enum Mode { MouseAndKeyboard, OnScreenKeyboard, PinPad }
 
-        private const float MOUSE_SPEED_MULTIPLIER = 1.5f;
-
         private DS4DeviceManager ds4DeviceManager;
         private HashSet<DS4Controls.Button> pressedDS4Buttons;
+
+        private XInputControllerManager xInputControllerManager;
+        private HashSet<XInputControls.Button> pressedXInputButtons;
+
         private InputSimulator inputSimulator;
 
         private Mode mode;
@@ -27,6 +31,10 @@ namespace GamePad_Intercepts_Authentication_Module
         {
             ds4DeviceManager = new DS4DeviceManager();
             pressedDS4Buttons = new HashSet<DS4Controls.Button>();
+
+            xInputControllerManager = new XInputControllerManager();
+            pressedXInputButtons = new HashSet<XInputControls.Button>();
+
             inputSimulator = new InputSimulator();
 
             mode = Mode.MouseAndKeyboard;
@@ -37,12 +45,16 @@ namespace GamePad_Intercepts_Authentication_Module
             Bus.Instance.Subscribe<string>(this, HandleMessageBusMessages);
             Bus.Instance.Publish(MessageBusEvents.CONTROLLER_SEARCHING);
 
-            ds4DeviceManager.Init();
+            ds4DeviceManager.Init(); // TODO: limit number of controllers being parsed to 1
             ds4DeviceManager.DeviceConnectionStateChanged += OnDS4ControllerConnectionStateChanged;
+
+            xInputControllerManager.Init(); // TODO: limit number of controllers being parsed to 1
+            xInputControllerManager.DeviceConnectionStateChanged += OnXInputControllerConnectionStateChanged;
         }
 
         public void CleanUp()
         {
+            xInputControllerManager.CleanUp();
             ds4DeviceManager.CleanUp();
             Bus.Instance.Unsubscribe(this);
         }
@@ -89,11 +101,11 @@ namespace GamePad_Intercepts_Authentication_Module
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Cross) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CROSS);
 
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Circle) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CIRCLE);
+
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Square) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_SQUARE);
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Triangle) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_TRIANGLE);
-
-                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Circle) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CIRCLE);
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.R1) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R1);
 
@@ -118,7 +130,7 @@ namespace GamePad_Intercepts_Authentication_Module
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Square) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_ACTION_BACKSPACE);
 
-                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Triangle) ;
+                    //if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Triangle) ;
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.L1) SendKeyMessage("5");
 
@@ -135,6 +147,76 @@ namespace GamePad_Intercepts_Authentication_Module
             }
         }
 
+        private void ParsePressedXInputButtons()
+        {
+            if (pressedXInputButtons.Count == 1)
+            {
+                if (mode == Mode.MouseAndKeyboard)
+                {
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.A) inputSimulator.Keyboard.KeyPress(VirtualKeyCode.RETURN);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB) inputSimulator.Mouse.LeftButtonClick();
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RT) inputSimulator.Mouse.RightButtonClick();
+                }
+                else if (mode == Mode.OnScreenKeyboard)
+                {
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadLeft) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_LEFT);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadUp) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_UP);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadRight) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_RIGHT);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadDown) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_DOWN);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.A) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CROSS);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.B) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_CIRCLE);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.X) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_SQUARE);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Y) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_TRIANGLE);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R1);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LB) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L1);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Start) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_START);
+                }
+                else if (mode == Mode.PinPad)
+                {
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadLeft) SendKeyMessage("1");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadUp) SendKeyMessage("2");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadRight) SendKeyMessage("3");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadDown) SendKeyMessage("4");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.A) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_ACTION_FINISH);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.B) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_ACTION_QUIT);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.X) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_ACTION_BACKSPACE);
+
+                    //if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Y) ;
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LB) SendKeyMessage("5");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LT) SendKeyMessage("7");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LS) SendKeyMessage("9");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB) SendKeyMessage("6");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RT) SendKeyMessage("8");
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RS) SendKeyMessage("0");
+                }
+            }
+        }
+
         private void SendKeyMessage(String key)
         {
             Bus.Instance.Publish(MessageBusEvents.Join(MessageBusEvents.CONTROLLER_SEND_KEY, key));
@@ -146,7 +228,6 @@ namespace GamePad_Intercepts_Authentication_Module
             {
                 e.Controller.DeviceButtonStateChanged += OnDS4ControllerButtonStateChanged;
                 e.Controller.DeviceAnalogStateChanged += OnDS4ControllerAnalogStateChanged;
-                e.Controller.DeviceTouchPadMoved += OnDS4ControllerTouchPadMoved;
 
                 Console.WriteLine("DS4 Controller connected");
 
@@ -156,7 +237,6 @@ namespace GamePad_Intercepts_Authentication_Module
             {
                 e.Controller.DeviceButtonStateChanged -= OnDS4ControllerButtonStateChanged;
                 e.Controller.DeviceAnalogStateChanged -= OnDS4ControllerAnalogStateChanged;
-                e.Controller.DeviceTouchPadMoved -= OnDS4ControllerTouchPadMoved;
 
                 Console.WriteLine("DS4 Controller disconnected");
 
@@ -180,29 +260,59 @@ namespace GamePad_Intercepts_Authentication_Module
 
         private void OnDS4ControllerAnalogStateChanged(object sender, DS4Controller.DeviceAnalogStateChangedEventArgs e)
         {
-            if (e.Analog == DS4Controls.Analog.LeftThumbStick)
-            {
-                if (mode == Mode.MouseAndKeyboard)
-                {
-                    inputSimulator.Mouse.HorizontalScroll((int)(e.Value[0] * MOUSE_SPEED_MULTIPLIER / 64));
-                    inputSimulator.Mouse.VerticalScroll(-(int)(e.Value[1] * MOUSE_SPEED_MULTIPLIER / 64));
-                }
-            }
-
             if (e.Analog == DS4Controls.Analog.RightThumbStick)
             {
                 if (mode == Mode.MouseAndKeyboard)
                 {
-                    inputSimulator.Mouse.MoveMouseBy((int)(e.Value[0] * MOUSE_SPEED_MULTIPLIER / 32), (int)(e.Value[1] * MOUSE_SPEED_MULTIPLIER / 32));
+                    inputSimulator.Mouse.MoveMouseBy(e.Value[0] * 3 / 20, e.Value[1] * 3 / 20);
                 }
             }
         }
 
-        private void OnDS4ControllerTouchPadMoved(object sender, DS4Controller.DeviceTouchPadMovedEventArgs e)
+        private void OnXInputControllerConnectionStateChanged(object sender, XInputControllerManager.DeviceConnectionStateChangedEventArgs e)
         {
-            if (mode == Mode.MouseAndKeyboard)
+            if (e.IsConnected)
             {
-                inputSimulator.Mouse.MoveMouseBy((int)(e.DeltaX * MOUSE_SPEED_MULTIPLIER / 2), (int)(e.DeltaY * MOUSE_SPEED_MULTIPLIER / 2));
+                e.Controller.DeviceButtonStateChanged += OnXInputControllerButtonStateChanged;
+                e.Controller.DeviceAnalogStateChanged += OnXInputControllerAnalogStateChanged;
+
+                Console.WriteLine("XInput Controller connected");
+
+                Bus.Instance.Publish(MessageBusEvents.CONTROLLER_CONNECTED);
+            }
+            else
+            {
+                e.Controller.DeviceButtonStateChanged -= OnXInputControllerButtonStateChanged;
+                e.Controller.DeviceAnalogStateChanged -= OnXInputControllerAnalogStateChanged;
+
+                Console.WriteLine("XInput Controller disconnected");
+
+                Bus.Instance.Publish(MessageBusEvents.CONTROLLER_SEARCHING);
+            }
+        }
+
+        private void OnXInputControllerButtonStateChanged(object sender, XInputController.DeviceButtonStateChangedEventArgs e)
+        {
+            if (e.IsPressed)
+            {
+                pressedXInputButtons.Add(e.Button);
+            }
+            else
+            {
+                pressedXInputButtons.Remove(e.Button);
+            }
+
+            ParsePressedXInputButtons();
+        }
+
+        private void OnXInputControllerAnalogStateChanged(object sender, XInputController.DeviceAnalogStateChangedEventArgs e)
+        {
+            if (e.Analog == XInputControls.Analog.RightThumbStick)
+            {
+                if (mode == Mode.MouseAndKeyboard)
+                {
+                    inputSimulator.Mouse.MoveMouseBy(e.Value[0] * 3 / 20, e.Value[1] * 3 / 20);
+                }
             }
         }
     }

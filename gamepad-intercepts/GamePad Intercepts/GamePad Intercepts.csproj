@@ -157,6 +157,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libraries\WindowsInput.dll</HintPath>
     </Reference>
+    <Reference Include="XInputDotNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=AMD64">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libraries\XInputDotNet.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Source\App.cs" />
@@ -342,6 +346,12 @@
     <Content Include="Libraries\MessageBus.dll" />
     <Content Include="Libraries\WinApiLibrary.dll" />
     <Content Include="Libraries\WindowsInput.dll" />
+    <Content Include="Libraries\XInputDotNet.dll" />
+    <ContentWithTargetPath Include="Libraries\XInputInterface.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <TargetPath>XInputInterface.dll</TargetPath>
+    </ContentWithTargetPath>
+    <None Include="Libraries\XInputInterface.dll" />
     <None Include="Resources\ic_account_settings.png" />
     <None Include="Resources\ic_sound_settings.png" />
     <None Include="Resources\ic_refresh.png" />

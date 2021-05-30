@@ -25,19 +25,17 @@ This is the core of the project. It provides a streamlined user interface to con
 
 ## Controller Support List
 - DualShock 4
-- (WISHLIST) Xbox One Contrller
-- (WISHLIST) Steam Controller (partial support)
+- XInput (Xbox 360 + Xbox One)
 
-## TODO
+## Todo List
 - UI overhaul
 - C# code clean up + face lift (most of the code was written "proof-of-concept-style and may not respect best C# practices)
-- Add Xbox controller support
-- Add Steam controller support
 
 ## Third Party Libraries
 
 - CoreAudio
-- DS4Windows
-- MessageBus
-- WindowsInput
+- [DS4Windows](https://github.com/Jays2Kings/DS4Windows)
+- [XInputDotNet](https://github.com/speps/XInputDotNet)
+- [MessageBus](https://github.com/rolandzpl/MessageBus)
+- [InputSimulator](https://github.com/michaelnoonan/inputsimulator)
 

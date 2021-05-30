@@ -40,7 +40,7 @@ namespace GamePad_Intercepts_Authentication_Module
 
             this.Opacity = .9;
             this.StartPosition = FormStartPosition.Manual;
-            this.Location = new Point((Screen.PrimaryScreen.Bounds.Width - this.Width) / 2, Screen.PrimaryScreen.Bounds.Height - this.Height - 50);
+            this.Location = new Point((Screen.PrimaryScreen.Bounds.Width - this.Width) / 2, Screen.PrimaryScreen.Bounds.Height - this.Height - 20);
 
             MessageBus.Bus.Instance.Subscribe<string>(this, HandleMessageBusMessages);
         }

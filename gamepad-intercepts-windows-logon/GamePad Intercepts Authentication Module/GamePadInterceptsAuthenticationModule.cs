@@ -26,7 +26,7 @@ namespace GamePad_Intercepts_Authentication_Module
 
         public void StopControllerManagerService()
         {
-            controllerInputManager.CleanUp(); // TODO: Actually need to implement the cleanup function. the thread isn't stopped here
+            controllerInputManager.CleanUp();
             controllerInputManager = null;
 
             statusBarForm.Close();

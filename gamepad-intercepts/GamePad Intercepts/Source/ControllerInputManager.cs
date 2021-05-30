@@ -3,17 +3,19 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsInput;
+using XInputDotNet;
 
 namespace GamePad_Intercepts
 {
     class ControllerInputManager
     {
-        private const float MOUSE_SPEED_MULTIPLIER_DEFAULT = 1f;
-        private const float MOUSE_SPEED_MULTIPLIER_FAST = 2f;
-        private const float MOUSE_SPEED_MULTIPLIER_SLOW = .5f;
+        private const int MOUSE_SPEED_MULTIPLIER_DEFAULT = 2;
+        private const int MOUSE_SPEED_MULTIPLIER_FAST = 4;
+        private const int MOUSE_SPEED_MULTIPLIER_SLOW = 1;
 
         private const int BATTERY_THRESHOLD_LOW = 30;
         private const int BATTERY_THRESHOLD_VERY_LOW = 20;
@@ -24,15 +26,23 @@ namespace GamePad_Intercepts
 
         private DS4DeviceManager ds4DeviceManager;
         private HashSet<DS4Controls.Button> pressedDS4Buttons;
+
+        private XInputControllerManager xInputControllerManager;
+        private HashSet<XInputControls.Button> pressedXInputButtons;
+
         private InputSimulator inputSimulator;
 
         private bool isMouseAndKeyboardModeEnabled;
-        private float mouseSpeedMultiplier;
+        private int mouseSpeedMultiplier;
 
         public ControllerInputManager()
         {
             ds4DeviceManager = new DS4DeviceManager();
             pressedDS4Buttons = new HashSet<DS4Controls.Button>();
+
+            xInputControllerManager = new XInputControllerManager();
+            pressedXInputButtons = new HashSet<XInputControls.Button>();
+
             inputSimulator = new InputSimulator();
 
             isMouseAndKeyboardModeEnabled = false;
@@ -43,10 +53,14 @@ namespace GamePad_Intercepts
         {
             ds4DeviceManager.Init(); // TODO: limit number of controllers being parsed to 1
             ds4DeviceManager.DeviceConnectionStateChanged += OnDS4ControllerConnectionStateChanged;
+
+            xInputControllerManager.Init(); // TODO: limit number of controllers being parsed to 1
+            xInputControllerManager.DeviceConnectionStateChanged += OnXInputControllerConnectionStateChanged;
         }
 
         public void CleanUp()
         {
+            xInputControllerManager.CleanUp();
             ds4DeviceManager.CleanUp();
         }
 
@@ -202,9 +216,14 @@ namespace GamePad_Intercepts
                     App.MissionControl.AltTab();
                 }
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.TouchPad))
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.R3))
                 {
                     App.MissionControl.ToggleOnScreenKeyboard();
+                }
+
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.L3))
+                {
+                    ToggleMouseKeyboardEmulation();
                 }
 
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadUp))
@@ -216,10 +235,156 @@ namespace GamePad_Intercepts
                 {
                     App.MissionControl.VolumeDown();
                 }
+            }
+        }
 
-                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.R3))
+        private void ParsePressedXInputButtons()
+        {
+            if (pressedXInputButtons.Count == 1)
+            {
+                //
+                // Button press event publishing
+                //
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadLeft)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Left });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadUp)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Up });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadRight)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Right });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.DpadDown)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Down });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.A)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Cross });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.B)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Circle });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.X)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Square });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Y)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Triangle });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LB)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.L1 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LT)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.L2 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LS)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.L3 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.R1 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RT)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.R2 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RS)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.R3 });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Start)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Start });
+                }
+
+                if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Back)
+                {
+                    MessageBus.Bus.Instance.Publish(new ControllerInputEvent { Action = ControllerInputEvent.EventAction.Select });
+                }
+
+
+                //
+                // Mouse and keyboard emulation
+                //
+
+                if (isMouseAndKeyboardModeEnabled)
+                {
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.A)
+                    {
+                        inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.RETURN);
+                    }
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.B)
+                    {
+                        inputSimulator.Keyboard.KeyPress(WindowsInput.Native.VirtualKeyCode.ESCAPE);
+                    }
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB)
+                    {
+                        inputSimulator.Mouse.LeftButtonClick();
+                    }
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RT)
+                    {
+                        inputSimulator.Mouse.RightButtonClick();
+                    }
+                }
+            }
+
+            if (pressedXInputButtons.Count == 2)
+            {
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.Start))
+                {
+                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
+                }
+
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.Back))
+                {
+                    App.MissionControl.AltTab();
+                }
+
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.RS))
+                {
+                    App.MissionControl.ToggleOnScreenKeyboard();
+                }
+
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.LS))
                 {
                     ToggleMouseKeyboardEmulation();
+                }
+
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.DpadUp))
+                {
+                    App.MissionControl.VolumeUp();
+                }
+
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.DpadDown))
+                {
+                    App.MissionControl.VolumeDown();
                 }
             }
         }
@@ -231,7 +396,7 @@ namespace GamePad_Intercepts
                 e.Controller.DeviceButtonStateChanged += OnDS4ControllerButtonStateChanged;
                 e.Controller.DeviceAnalogStateChanged += OnDS4ControllerAnalogStateChanged;
                 e.Controller.DeviceTouchPadMoved += OnDS4ControllerTouchPadMoved;
-                e.Controller.DeviceGeneralStateChanged += OnDeviceGeneralStateChanged;
+                e.Controller.DeviceGeneralStateChanged += OnDS4ControllerGeneralStateChanged;
 
                 App.MissionControl.ShowNotification("DS4 Controller connected");
             }
@@ -240,7 +405,7 @@ namespace GamePad_Intercepts
                 e.Controller.DeviceButtonStateChanged -= OnDS4ControllerButtonStateChanged;
                 e.Controller.DeviceAnalogStateChanged -= OnDS4ControllerAnalogStateChanged;
                 e.Controller.DeviceTouchPadMoved -= OnDS4ControllerTouchPadMoved;
-                e.Controller.DeviceGeneralStateChanged -= OnDeviceGeneralStateChanged;
+                e.Controller.DeviceGeneralStateChanged -= OnDS4ControllerGeneralStateChanged;
 
                 DisableMouseKeyboardEmulation();
 
@@ -287,8 +452,8 @@ namespace GamePad_Intercepts
             {
                 if (isMouseAndKeyboardModeEnabled)
                 {
-                    inputSimulator.Mouse.HorizontalScroll((int) (e.Value[0] * mouseSpeedMultiplier / 64));
-                    inputSimulator.Mouse.VerticalScroll(- (int) (e.Value[1] * mouseSpeedMultiplier / 64));
+                    inputSimulator.Mouse.HorizontalScroll(e.Value[0] * mouseSpeedMultiplier / 64);
+                    inputSimulator.Mouse.VerticalScroll(-(e.Value[1] * mouseSpeedMultiplier / 64));
                 }
             }
 
@@ -296,10 +461,7 @@ namespace GamePad_Intercepts
             {
                 if (isMouseAndKeyboardModeEnabled)
                 {
-                    inputSimulator.Mouse.MoveMouseBy(
-                        (int)(e.Value[0] * mouseSpeedMultiplier / 32),
-                        (int)(e.Value[1] * mouseSpeedMultiplier / 32)
-                    );
+                    inputSimulator.Mouse.MoveMouseBy(e.Value[0] * mouseSpeedMultiplier / 20, e.Value[1] * mouseSpeedMultiplier / 20);
                 }
             }
         }
@@ -308,14 +470,11 @@ namespace GamePad_Intercepts
         {
             if (isMouseAndKeyboardModeEnabled)
             {
-                inputSimulator.Mouse.MoveMouseBy(
-                    (int)(e.DeltaX * mouseSpeedMultiplier / 2),
-                    (int)(e.DeltaY * mouseSpeedMultiplier / 2)
-                );
+                inputSimulator.Mouse.MoveMouseBy(e.DeltaX * mouseSpeedMultiplier / 2, e.DeltaY * mouseSpeedMultiplier / 2);
             }
         }
 
-        private void OnDeviceGeneralStateChanged(object sender, DS4Controller.DeviceGeneralStateChangedEventArgs e)
+        private void OnDS4ControllerGeneralStateChanged(object sender, DS4Controller.DeviceGeneralStateChangedEventArgs e)
         {
             switch (e.Battery)
             {
@@ -333,6 +492,101 @@ namespace GamePad_Intercepts
             {
                 App.MissionControl.HideStickyNotification(TAG_BATTERY_STATE);
             }
+        }
+
+        private void OnXInputControllerConnectionStateChanged(object sender, XInputControllerManager.DeviceConnectionStateChangedEventArgs e)
+        {
+            if (e.IsConnected)
+            {
+                e.Controller.DeviceButtonStateChanged += OnXInputControllerButtonStateChanged;
+                e.Controller.DeviceAnalogStateChanged += OnXInputControllerAnalogStateChanged;
+                e.Controller.DeviceGeneralStateChanged += OnXInputControllerGeneralStateChanged;
+
+                App.MissionControl.ShowNotification("XInput Controller connected");
+            }
+            else
+            {
+                e.Controller.DeviceButtonStateChanged -= OnXInputControllerButtonStateChanged;
+                e.Controller.DeviceAnalogStateChanged -= OnXInputControllerAnalogStateChanged;
+                e.Controller.DeviceGeneralStateChanged -= OnXInputControllerGeneralStateChanged;
+
+                DisableMouseKeyboardEmulation();
+
+                App.MissionControl.ShowNotification("XInput Controller disconnected");
+            }
+        }
+
+        private void OnXInputControllerButtonStateChanged(object sender, XInputController.DeviceButtonStateChangedEventArgs e)
+        {
+            // Parsing button press combinations
+            if (e.IsPressed)
+            {
+                pressedXInputButtons.Add(e.Button);
+            }
+            else
+            {
+                pressedXInputButtons.Remove(e.Button);
+            }
+
+            ParsePressedXInputButtons();
+
+            //
+            // Parsing more complex input sequences and states
+            //
+
+            // Handling mouse speed modifier change states
+            if (e.Button == XInputControls.Button.LB && e.IsPressed)
+            {
+                mouseSpeedMultiplier = MOUSE_SPEED_MULTIPLIER_FAST;
+            }
+            else if (e.Button == XInputControls.Button.LT && e.IsPressed)
+            {
+                mouseSpeedMultiplier = MOUSE_SPEED_MULTIPLIER_SLOW;
+            }
+            else
+            {
+                mouseSpeedMultiplier = MOUSE_SPEED_MULTIPLIER_DEFAULT;
+            }
+        }
+
+        private void OnXInputControllerAnalogStateChanged(object sender, XInputController.DeviceAnalogStateChangedEventArgs e)
+        {
+            if (e.Analog == XInputControls.Analog.LeftThumbStick)
+            {
+                if (isMouseAndKeyboardModeEnabled)
+                {
+                    inputSimulator.Mouse.HorizontalScroll(e.Value[0] * mouseSpeedMultiplier / 64);
+                    inputSimulator.Mouse.VerticalScroll(-(e.Value[1] * mouseSpeedMultiplier / 64));
+                }
+            }
+
+            if (e.Analog == XInputControls.Analog.RightThumbStick)
+            {
+                if (isMouseAndKeyboardModeEnabled)
+                {
+                    inputSimulator.Mouse.MoveMouseBy(e.Value[0] * mouseSpeedMultiplier / 20, e.Value[1] * mouseSpeedMultiplier / 20);
+                }
+            }
+        }
+
+        private void OnXInputControllerGeneralStateChanged(object sender, XInputController.DeviceGeneralStateChangedEventArgs e)
+        {
+            //switch (e.Battery)
+            //{
+            //    case BATTERY_THRESHOLD_LOW:
+            //    case BATTERY_THRESHOLD_VERY_LOW:
+            //        App.MissionControl.ShowNotification("Low controller battery warning: " + e.Battery + "%");
+            //        break;
+            //}
+
+            //if (e.Battery <= BATTERY_THRESHOLD_CRITICAL)
+            //{
+            //    App.MissionControl.ShowStickyNotification("Controller battery very low: " + e.Battery + "%", TAG_BATTERY_STATE);
+            //}
+            //else
+            //{
+            //    App.MissionControl.HideStickyNotification(TAG_BATTERY_STATE);
+            //}
         }
     }
 }

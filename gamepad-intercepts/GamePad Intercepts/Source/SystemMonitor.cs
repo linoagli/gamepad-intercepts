@@ -61,8 +61,19 @@ namespace GamePad_Intercepts
                 //TimeSpan batteryTime = TimeSpan.FromSeconds(SystemInformation.PowerStatus.BatteryLifeRemaining);
                 //string powerInfo = batteryPercent.ToString() + "% (" + batteryTime.Hours + " hrs " + batteryTime.Minutes + " mins)";
 
-                MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { BatteryPercent = batteryPercent });
-                App.MissionControl.ShowNotification("Battery Level Changed:\n" + batteryPercent.ToString() + "%");
+                bool notify = batteryPercent == 5
+                    || batteryPercent == 10
+                    || batteryPercent == 15
+                    || batteryPercent == 20
+                    || batteryPercent == 30
+                    || batteryPercent == 50
+                    || batteryPercent == 75;
+
+                if (notify)
+                {
+                    MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { BatteryPercent = batteryPercent });
+                    App.MissionControl.ShowNotification($"Battery Level:\n{batteryPercent} %");
+                }
             }
         }
 
