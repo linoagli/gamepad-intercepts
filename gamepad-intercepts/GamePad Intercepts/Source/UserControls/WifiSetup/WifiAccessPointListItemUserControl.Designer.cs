@@ -39,11 +39,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.metroTile_accessPointButton.Location = new System.Drawing.Point(3, 3);
             this.metroTile_accessPointButton.Name = "metroTile_accessPointButton";
-            this.metroTile_accessPointButton.Size = new System.Drawing.Size(619, 92);
+            this.metroTile_accessPointButton.Size = new System.Drawing.Size(494, 69);
             this.metroTile_accessPointButton.Style = MetroFramework.MetroColorStyle.Silver;
             this.metroTile_accessPointButton.TabIndex = 0;
-            this.metroTile_accessPointButton.Text = "Access Point Name\r\nSecured\r\nSignal Strength: 100%";
+            this.metroTile_accessPointButton.Text = "Access Point Name | Closed | RSSI: 100%";
             this.metroTile_accessPointButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.metroTile_accessPointButton.TileTextFontSize = MetroFramework.MetroTileTextSize.Tall;
+            this.metroTile_accessPointButton.TileTextFontWeight = MetroFramework.MetroTileTextWeight.Regular;
             this.metroTile_accessPointButton.UseSelectable = true;
             this.metroTile_accessPointButton.Click += new System.EventHandler(this.metroTile_accessPointButton_Click);
             // 
@@ -53,7 +55,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.metroTile_accessPointButton);
             this.Name = "WifiAccessPointListItemUserControl";
-            this.Size = new System.Drawing.Size(625, 98);
+            this.Size = new System.Drawing.Size(500, 75);
             this.ResumeLayout(false);
 
         }

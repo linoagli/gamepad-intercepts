@@ -22,7 +22,6 @@ namespace GamePad_Intercepts.Forms
         private WindowsFormsSynchronizationContext synchronizationContext;
         
         private HomeUserControl homeUserControl;
-        private WebBrowserUserControl webBrowserUserControl;
         private WifiSetupUserControl wifiSetupUserControl;
 
         protected override CreateParams CreateParams
@@ -41,16 +40,15 @@ namespace GamePad_Intercepts.Forms
             synchronizationContext = (WindowsFormsSynchronizationContext)SynchronizationContext.Current;
 
             homeUserControl = new HomeUserControl();
-            webBrowserUserControl = new WebBrowserUserControl();
             wifiSetupUserControl = new WifiSetupUserControl();
 
             InitializeComponent();
 
             MessageBus.Bus.Instance.Subscribe<UIEvent>(this, OnUIEvent);
 
-            this.Width = (int) (Screen.PrimaryScreen.Bounds.Width);
-            this.Height = (int) (Screen.PrimaryScreen.Bounds.Height);
-            this.Location = new Point(0, 0);
+            //this.Width = (int) (Screen.PrimaryScreen.Bounds.Width);
+            //this.Height = (int) (Screen.PrimaryScreen.Bounds.Height);
+            this.Location = new Point((Screen.PrimaryScreen.Bounds.Width - this.Width) / 2, (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2);
         }
 
         public new void Show()
@@ -106,8 +104,7 @@ namespace GamePad_Intercepts.Forms
                 //metroLabel_breadcrumb.Text = BREADCRUMB_BASE + " > " + (userControl.Tag as string);
 
                 // Making the back button visible if necessary
-                if (userControl is WebBrowserUserControl) metroLink_back.Visible = true;
-                else if (userControl is WifiSetupUserControl) metroLink_back.Visible = true;
+                if (userControl is WifiSetupUserControl) metroLink_back.Visible = true;
                 else metroLink_back.Visible = false;
             }, null);
         }
@@ -121,11 +118,6 @@ namespace GamePad_Intercepts.Forms
             {
                 wifiSetupUserControl.ShowWifiStatus();
                 ShowUserControl(wifiSetupUserControl);
-            }
-            else if (message.Action == UIEvent.EventAction.ShowWebBrowser)
-            {
-                webBrowserUserControl.ShowBrowser();
-                ShowUserControl(webBrowserUserControl);
             }
         }
 

@@ -33,13 +33,13 @@ namespace GamePad_Intercepts.UserControls
             synchronizationContext.Post(delegate
             {
                 if (message.BatteryPercent != -1)
-                    metroLabel_powerStatus.Text = "Power Level: " + message.BatteryPercent.ToString() + "%";
+                    metroLabel_powerStatus.Text =  message.BatteryPercent.ToString() + "%";
 
                 if (message.SystemVolumePercent != -1)
-                    metroLabel_systemVolumeStatus.Text = "System Volume: " + message.SystemVolumePercent.ToString() + "%";
+                    metroLabel_systemVolumeStatus.Text = message.SystemVolumePercent.ToString() + "%";
 
                 if (message.WifiStatus != null)
-                    metroLabel_networkStatus.Text = "Wifi Status: " + message.WifiStatus;
+                    metroLabel_networkStatus.Text = message.WifiStatus;
             }, null);
         }
 
@@ -48,7 +48,7 @@ namespace GamePad_Intercepts.UserControls
             Process process = Process.Start("mmsys.cpl");
             process.WaitForInputIdle(3000);
 
-            MessageBus.Bus.Instance.Publish(new UIEvent() { Action = UIEvent.EventAction.HideHomeScreen });
+            //MessageBus.Bus.Instance.Publish(new UIEvent() { Action = UIEvent.EventAction.HideHomeScreen });
         }
 
         private void metroTile_powerOptions_Click(object sender, EventArgs e)
@@ -60,11 +60,6 @@ namespace GamePad_Intercepts.UserControls
         private void metroTile_wifiSettings_Click(object sender, EventArgs e)
         {
             MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowWifiSettings });
-        }
-
-        private void metroTile_webBrowser_Click(object sender, EventArgs e)
-        {
-            MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowWebBrowser });
         }
 
         private void metroTile_launchGamePlatform_Click(object sender, EventArgs e)

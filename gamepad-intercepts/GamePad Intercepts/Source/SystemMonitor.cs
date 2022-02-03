@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -60,18 +61,12 @@ namespace GamePad_Intercepts
                 currentBatteryPercent = batteryPercent;
                 //TimeSpan batteryTime = TimeSpan.FromSeconds(SystemInformation.PowerStatus.BatteryLifeRemaining);
                 //string powerInfo = batteryPercent.ToString() + "% (" + batteryTime.Hours + " hrs " + batteryTime.Minutes + " mins)";
+                
+                MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { BatteryPercent = batteryPercent });
 
-                bool notify = batteryPercent == 5
-                    || batteryPercent == 10
-                    || batteryPercent == 15
-                    || batteryPercent == 20
-                    || batteryPercent == 30
-                    || batteryPercent == 50
-                    || batteryPercent == 75;
-
+                bool notify = batteryPercent == 10 || batteryPercent == 15 || batteryPercent == 20 || batteryPercent == 30 || batteryPercent == 50 || batteryPercent == 75;
                 if (notify)
                 {
-                    MessageBus.Bus.Instance.Publish(new SystemStatusUpdateEvent() { BatteryPercent = batteryPercent });
                     App.MissionControl.ShowNotification($"Battery Level:\n{batteryPercent} %");
                 }
             }
@@ -103,7 +98,7 @@ namespace GamePad_Intercepts
             string wifiStatus = null;
             try
             {
-                bool isConnectedToANetwork = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
+                bool isConnectedToANetwork = NetworkInterface.GetIsNetworkAvailable();
                 var currentConnectedAP = WifiManager.GetCurrentConnectedAccessPoint();
 
                 if (isConnectedToANetwork)

@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -65,7 +66,7 @@ namespace GamePad_Intercepts
 
             new SteamUtils(PATH_DIRECTORY_STEAM).InstallAppBanners();
 
-            //Loading the main UI
+            // Loading the main UI
             MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowHomeScreen });
         }
 

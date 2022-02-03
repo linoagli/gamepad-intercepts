@@ -29,7 +29,7 @@ This is the core of the project. It provides a streamlined user interface to con
 
 ## Todo List
 - UI overhaul
-- C# code clean up + face lift (most of the code was written "proof-of-concept-style and may not respect best C# practices)
+- C# code clean up + face lift (most of the code was written "proof of concept" style and may not respect best C# practices)
 
 ## Third Party Libraries
 
