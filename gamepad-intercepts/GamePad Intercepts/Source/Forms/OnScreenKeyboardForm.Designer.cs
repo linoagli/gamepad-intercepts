@@ -36,11 +36,9 @@
             this.keyboard.BackColor = System.Drawing.Color.Black;
             this.keyboard.Location = new System.Drawing.Point(1, 1);
             this.keyboard.Margin = new System.Windows.Forms.Padding(0);
-            this.keyboard.MaximumSize = new System.Drawing.Size(705, 355);
-            this.keyboard.MinimumSize = new System.Drawing.Size(705, 355);
             this.keyboard.Name = "keyboard";
             this.keyboard.Padding = new System.Windows.Forms.Padding(5);
-            this.keyboard.Size = new System.Drawing.Size(705, 355);
+            this.keyboard.Size = new System.Drawing.Size(705, 270);
             this.keyboard.TabIndex = 2;
             // 
             // OnScreenKeyboardForm
@@ -48,7 +46,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(707, 357);
+            this.ClientSize = new System.Drawing.Size(707, 272);
             this.Controls.Add(this.keyboard);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;

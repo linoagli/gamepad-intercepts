@@ -67,7 +67,7 @@ namespace GamePad_Intercepts
             new SteamUtils(PATH_DIRECTORY_STEAM).InstallAppBanners();
 
             // Loading the main UI
-            MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ShowHomeScreen });
+            mainForm.Show();
         }
 
         public class MissionControl
@@ -142,6 +142,16 @@ namespace GamePad_Intercepts
             public static void AltTab()
             {
                 messageOnlyForm.AltTab();
+            }
+
+            public static void AltEnter()
+            {
+                messageOnlyForm.AltEnter();
+            }
+
+            public static void AltF4()
+            {
+                messageOnlyForm.AltF4();
             }
         }
     }

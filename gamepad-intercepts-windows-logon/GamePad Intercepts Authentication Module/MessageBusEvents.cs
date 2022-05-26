@@ -29,7 +29,9 @@ namespace GamePad_Intercepts_Authentication_Module
         public const string CONTROLLER_INPUT_TRIANGLE = "controller_inputTriangle";
         public const string CONTROLLER_INPUT_CIRCLE = "controller_inputCircle";
         public const string CONTROLLER_INPUT_R1 = "controller_inputR1";
+        public const string CONTROLLER_INPUT_R2 = "controller_inputR2";
         public const string CONTROLLER_INPUT_L1 = "controller_inputL1";
+        public const string CONTROLLER_INPUT_L2 = "controller_inputL2";
         public const string CONTROLLER_INPUT_START = "controller_inputStart";
 
         public static string Join(params string[] messageParts)

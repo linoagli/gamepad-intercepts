@@ -73,11 +73,11 @@ namespace GamePad_Intercepts_Authentication_Module
                 {
                     keyboard_keyboard.PressKey();
                 }
-                else if (message == MessageBusEvents.CONTROLLER_INPUT_SQUARE)
+                else if (message == MessageBusEvents.CONTROLLER_INPUT_L1)
                 {
                     keyboard_keyboard.PressDeleteKey();
                 }
-                else if (message == MessageBusEvents.CONTROLLER_INPUT_TRIANGLE)
+                else if (message == MessageBusEvents.CONTROLLER_INPUT_R1)
                 {
                     keyboard_keyboard.PressSpacebarKey();
                 }
@@ -85,11 +85,11 @@ namespace GamePad_Intercepts_Authentication_Module
                 {
                     Close();
                 }
-                else if (message == MessageBusEvents.CONTROLLER_INPUT_L1)
+                else if (message == MessageBusEvents.CONTROLLER_INPUT_L2)
                 {
                     keyboard_keyboard.PressShiftKey();
                 }
-                else if (message == MessageBusEvents.CONTROLLER_INPUT_R1)
+                else if (message == MessageBusEvents.CONTROLLER_INPUT_R2)
                 {
                     keyboard_keyboard.PressSpecialKey();
                 }

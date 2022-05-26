@@ -86,7 +86,7 @@ namespace GamePad_Intercepts
             {
                 if (pressedKeys.Contains(Keys.LControlKey) && pressedKeys.Contains(Keys.LMenu) && pressedKeys.Contains(Keys.H))
                 {
-                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
+                    App.MissionControl.StartGamesPlatformLauncher();
                 }
             }
         }

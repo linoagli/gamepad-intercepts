@@ -15,42 +15,25 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <CefSharpAnyCpuSupport>true</CefSharpAnyCpuSupport>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>1</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <PublishWizardCompleted>true</PublishWizardCompleted>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>5A3614C0E1BAE4BA8F61E8DD8D5208A100234D3D</ManifestCertificateThumbprint>
@@ -130,6 +113,12 @@
   <ItemGroup>
     <Compile Include="Source\App.cs" />
     <Compile Include="Source\ControllerInputManager.cs" />
+    <Compile Include="Source\Forms\MessageOnlyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Source\Forms\MessageOnlyForm.Designer.cs">
+      <DependentUpon>MessageOnlyForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Source\Forms\OnScreenKeyboardForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,7 +127,6 @@
     </Compile>
     <Compile Include="Source\ControllerInputEvent.cs" />
     <Compile Include="Source\SteamUtils.cs" />
-    <Compile Include="Source\UIEvent.cs" />
     <Compile Include="Source\SystemStatusUpdateEvent.cs" />
     <Compile Include="Source\Forms\StickyNotificationForm.cs">
       <SubType>Form</SubType>
@@ -151,18 +139,6 @@
     </Compile>
     <Compile Include="Source\Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\UserControls\HomeUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\HomeUserControl.Designer.cs">
-      <DependentUpon>HomeUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetupUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetupUserControl.Designer.cs">
-      <DependentUpon>WifiSetupUserControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Source\Forms\NotificationForm.cs">
       <SubType>Form</SubType>
@@ -179,47 +155,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Source\Forms\MessageOnlyForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Source\Forms\MessageOnlyForm.Designer.cs">
-      <DependentUpon>MessageOnlyForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\SystemAudio.cs" />
     <Compile Include="Source\SystemMonitor.cs" />
-    <Compile Include="Source\UserControls\UserControlMetaData.cs" />
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointListItemUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointListItemUserControl.Designer.cs">
-      <DependentUpon>WifiAccessPointListItemUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointListUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointListUserControl.Designer.cs">
-      <DependentUpon>WifiAccessPointListUserControl.cs</DependentUpon>
-    </Compile>
     <Compile Include="Source\ProcessUtils.cs" />
     <Compile Include="Source\WifiManager.cs" />
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.Designer.cs">
-      <DependentUpon>WifiAccessPointPasswordPromptUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiSetupProgressUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiSetupProgressUserControl.Designer.cs">
-      <DependentUpon>WifiSetupProgressUserControl.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiStatusUserControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Source\UserControls\WifiSetup\WifiStatusUserControl.Designer.cs">
-      <DependentUpon>WifiStatusUserControl.cs</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="Source\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -232,12 +171,6 @@
     <EmbeddedResource Include="Source\Forms\StickyNotificationForm.resx">
       <DependentUpon>StickyNotificationForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\HomeUserControl.resx">
-      <DependentUpon>HomeUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetupUserControl.resx">
-      <DependentUpon>WifiSetupUserControl.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Source\Forms\NotificationForm.resx">
       <DependentUpon>NotificationForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,21 +178,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetup\WifiAccessPointListItemUserControl.resx">
-      <DependentUpon>WifiAccessPointListItemUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetup\WifiAccessPointListUserControl.resx">
-      <DependentUpon>WifiAccessPointListUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetup\WifiAccessPointPasswordPromptUserControl.resx">
-      <DependentUpon>WifiAccessPointPasswordPromptUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetup\WifiSetupProgressUserControl.resx">
-      <DependentUpon>WifiSetupProgressUserControl.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Source\UserControls\WifiSetup\WifiStatusUserControl.resx">
-      <DependentUpon>WifiStatusUserControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.manifest">
       <SubType>Designer</SubType>

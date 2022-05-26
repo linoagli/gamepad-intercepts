@@ -29,9 +29,10 @@
         private void InitializeComponent()
         {
             this.metroPanel_controlsContainer = new MetroFramework.Controls.MetroPanel();
-            this.metroLabel_breadcrumb = new MetroFramework.Controls.MetroLabel();
-            this.metroLink_back = new MetroFramework.Controls.MetroLink();
-            this.metroLink_close = new MetroFramework.Controls.MetroLink();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
+            this.metroPanel_controlsContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // metroPanel_controlsContainer
@@ -39,53 +40,40 @@
             this.metroPanel_controlsContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.metroPanel_controlsContainer.Controls.Add(this.metroLabel1);
+            this.metroPanel_controlsContainer.Controls.Add(this.pictureBox1);
             this.metroPanel_controlsContainer.HorizontalScrollbarBarColor = true;
             this.metroPanel_controlsContainer.HorizontalScrollbarHighlightOnWheel = false;
             this.metroPanel_controlsContainer.HorizontalScrollbarSize = 10;
-            this.metroPanel_controlsContainer.Location = new System.Drawing.Point(23, 71);
+            this.metroPanel_controlsContainer.Location = new System.Drawing.Point(23, 33);
             this.metroPanel_controlsContainer.Name = "metroPanel_controlsContainer";
-            this.metroPanel_controlsContainer.Size = new System.Drawing.Size(1054, 556);
+            this.metroPanel_controlsContainer.Size = new System.Drawing.Size(1054, 594);
             this.metroPanel_controlsContainer.TabIndex = 0;
             this.metroPanel_controlsContainer.VerticalScrollbarBarColor = true;
             this.metroPanel_controlsContainer.VerticalScrollbarHighlightOnWheel = false;
             this.metroPanel_controlsContainer.VerticalScrollbarSize = 10;
             // 
-            // metroLabel_breadcrumb
+            // pictureBox1
             // 
-            this.metroLabel_breadcrumb.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLabel_breadcrumb.FontSize = MetroFramework.MetroLabelSize.Tall;
-            this.metroLabel_breadcrumb.FontWeight = MetroFramework.MetroLabelWeight.Regular;
-            this.metroLabel_breadcrumb.Location = new System.Drawing.Point(23, 33);
-            this.metroLabel_breadcrumb.Name = "metroLabel_breadcrumb";
-            this.metroLabel_breadcrumb.Size = new System.Drawing.Size(978, 32);
-            this.metroLabel_breadcrumb.TabIndex = 1;
-            this.metroLabel_breadcrumb.Text = "GamePad Intercepts";
-            this.metroLabel_breadcrumb.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.pictureBox1.Image = global::GamePad_Intercepts.Properties.Resources.ic_app;
+            this.pictureBox1.Location = new System.Drawing.Point(444, 181);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(150, 150);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 3;
+            this.pictureBox1.TabStop = false;
             // 
-            // metroLink_back
+            // metroLabel1
             // 
-            this.metroLink_back.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLink_back.Image = global::GamePad_Intercepts.Properties.Resources.ic_back;
-            this.metroLink_back.ImageSize = 32;
-            this.metroLink_back.Location = new System.Drawing.Point(1007, 33);
-            this.metroLink_back.Name = "metroLink_back";
-            this.metroLink_back.Size = new System.Drawing.Size(32, 32);
-            this.metroLink_back.TabIndex = 3;
-            this.metroLink_back.UseSelectable = true;
-            this.metroLink_back.Click += new System.EventHandler(this.metroLink_back_Click);
-            // 
-            // metroLink_close
-            // 
-            this.metroLink_close.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.metroLink_close.Image = global::GamePad_Intercepts.Properties.Resources.if_close_black;
-            this.metroLink_close.ImageSize = 32;
-            this.metroLink_close.Location = new System.Drawing.Point(1045, 33);
-            this.metroLink_close.Name = "metroLink_close";
-            this.metroLink_close.Size = new System.Drawing.Size(32, 32);
-            this.metroLink_close.TabIndex = 2;
-            this.metroLink_close.UseSelectable = true;
-            this.metroLink_close.Click += new System.EventHandler(this.metroLink_close_Click);
+            this.metroLabel1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.metroLabel1.FontWeight = MetroFramework.MetroLabelWeight.Regular;
+            this.metroLabel1.Location = new System.Drawing.Point(370, 369);
+            this.metroLabel1.Name = "metroLabel1";
+            this.metroLabel1.Size = new System.Drawing.Size(312, 23);
+            this.metroLabel1.TabIndex = 4;
+            this.metroLabel1.Text = "Press SUPER + START to launch Steam";
+            this.metroLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // MainForm
             // 
@@ -93,9 +81,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 650);
             this.ControlBox = false;
-            this.Controls.Add(this.metroLink_back);
-            this.Controls.Add(this.metroLink_close);
-            this.Controls.Add(this.metroLabel_breadcrumb);
             this.Controls.Add(this.metroPanel_controlsContainer);
             this.DisplayHeader = false;
             this.MaximizeBox = false;
@@ -107,6 +92,8 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Style = MetroFramework.MetroColorStyle.Silver;
             this.Text = "GPI | Gamepad Intercepts";
+            this.metroPanel_controlsContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -114,8 +101,7 @@
         #endregion
 
         private MetroFramework.Controls.MetroPanel metroPanel_controlsContainer;
-        private MetroFramework.Controls.MetroLabel metroLabel_breadcrumb;
-        private MetroFramework.Controls.MetroLink metroLink_close;
-        private MetroFramework.Controls.MetroLink metroLink_back;
+        private MetroFramework.Controls.MetroLabel metroLabel1;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

@@ -208,7 +208,7 @@ namespace GamePad_Intercepts
             {
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Options))
                 {
-                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
+                    App.MissionControl.StartGamesPlatformLauncher();
                 }
 
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.Share))
@@ -226,6 +226,11 @@ namespace GamePad_Intercepts
                     ToggleMouseKeyboardEmulation();
                 }
 
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadLeft))
+                {
+                    App.MissionControl.AltEnter();
+                }
+
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadUp))
                 {
                     App.MissionControl.VolumeUp();
@@ -234,6 +239,18 @@ namespace GamePad_Intercepts
                 if (pressedDS4Buttons.Contains(DS4Controls.Button.PS) && pressedDS4Buttons.Contains(DS4Controls.Button.DpadDown))
                 {
                     App.MissionControl.VolumeDown();
+                }
+            }
+
+            if (pressedDS4Buttons.Count == 5)
+            {
+                if (pressedDS4Buttons.Contains(DS4Controls.Button.PS)
+                    && pressedDS4Buttons.Contains(DS4Controls.Button.L1)
+                    && pressedDS4Buttons.Contains(DS4Controls.Button.L2)
+                    && pressedDS4Buttons.Contains(DS4Controls.Button.R1)
+                    && pressedDS4Buttons.Contains(DS4Controls.Button.R2))
+                {
+                    App.MissionControl.AltF4();
                 }
             }
         }
@@ -359,7 +376,7 @@ namespace GamePad_Intercepts
             {
                 if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.Start))
                 {
-                    MessageBus.Bus.Instance.Publish(new UIEvent { Action = UIEvent.EventAction.ToggleHomeScreen });
+                    App.MissionControl.StartGamesPlatformLauncher();
                 }
 
                 if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.Back))
@@ -377,6 +394,11 @@ namespace GamePad_Intercepts
                     ToggleMouseKeyboardEmulation();
                 }
 
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.DpadLeft))
+                {
+                    App.MissionControl.AltEnter();
+                }
+
                 if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.DpadUp))
                 {
                     App.MissionControl.VolumeUp();
@@ -385,6 +407,18 @@ namespace GamePad_Intercepts
                 if (pressedXInputButtons.Contains(XInputControls.Button.Guide) && pressedXInputButtons.Contains(XInputControls.Button.DpadDown))
                 {
                     App.MissionControl.VolumeDown();
+                }
+            }
+
+            if (pressedDS4Buttons.Count == 5)
+            {
+                if (pressedXInputButtons.Contains(XInputControls.Button.Guide)
+                    && pressedXInputButtons.Contains(XInputControls.Button.LB)
+                    && pressedXInputButtons.Contains(XInputControls.Button.LT)
+                    && pressedXInputButtons.Contains(XInputControls.Button.RB)
+                    && pressedXInputButtons.Contains(XInputControls.Button.RT))
+                {
+                    App.MissionControl.AltF4();
                 }
             }
         }

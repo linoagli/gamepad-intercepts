@@ -60,7 +60,6 @@ namespace GamePad_Intercepts.Forms
 
         public new void Show()
         {
-            // Setting this form's window as topmost
             User32.SetWindowPos(Handle, User32.HWND_TOPMOST, 0, 0, 0, 0, User32.SWP_NOACTIVATE | User32.SWP_NOMOVE | User32.SWP_NOSIZE);
 
             base.Show();
@@ -73,8 +72,6 @@ namespace GamePad_Intercepts.Forms
         public new void Hide()
         {
             MessageBus.Bus.Instance.Unsubscribe(this);
-
-            App.MissionControl.EnableControllerMouseKeyboardEmulation();
 
             base.Hide();
         }
@@ -130,19 +127,19 @@ namespace GamePad_Intercepts.Forms
                 {
                     keyboard.PressKey();
                 }
-                else if (message.Action ==  ControllerInputEvent.EventAction.Square)
+                else if (message.Action ==  ControllerInputEvent.EventAction.L1)
                 {
                     keyboard.PressDeleteKey();
                 }
-                else if (message.Action == ControllerInputEvent.EventAction.Triangle)
+                else if (message.Action == ControllerInputEvent.EventAction.R1)
                 {
                     keyboard.PressSpacebarKey();
                 }
-                else if (message.Action == ControllerInputEvent.EventAction.L1)
+                else if (message.Action == ControllerInputEvent.EventAction.L2)
                 {
                     keyboard.PressShiftKey();
                 }
-                else if (message.Action == ControllerInputEvent.EventAction.R1)
+                else if (message.Action == ControllerInputEvent.EventAction.R2)
                 {
                     keyboard.PressSpecialKey();
                 }

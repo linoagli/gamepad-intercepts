@@ -109,7 +109,11 @@ namespace GamePad_Intercepts_Authentication_Module
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.R1) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R1);
 
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.R2) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R2);
+
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.L1) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L1);
+
+                    if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.L2) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L2);
 
                     if (pressedDS4Buttons.FirstOrDefault() == DS4Controls.Button.Options) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_START);
                 }
@@ -179,7 +183,11 @@ namespace GamePad_Intercepts_Authentication_Module
 
                     if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RB) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R1);
 
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.RT) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_R2);
+
                     if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LB) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L1);
+
+                    if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.LT) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_L2);
 
                     if (pressedXInputButtons.FirstOrDefault() == XInputControls.Button.Start) Bus.Instance.Publish(MessageBusEvents.CONTROLLER_INPUT_START);
                 }

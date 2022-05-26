@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +20,7 @@ namespace GamePad_Intercepts.Forms
         {
             var accessHandle = this.Handle; // Necessary to trigger the call to OnHandleCreated
 
-             synchronizationContext = (WindowsFormsSynchronizationContext) SynchronizationContext.Current;
+            synchronizationContext = (WindowsFormsSynchronizationContext)SynchronizationContext.Current;
         }
 
         protected override void OnHandleCreated(EventArgs e)
@@ -39,7 +38,6 @@ namespace GamePad_Intercepts.Forms
             {
                 case WM_KEYDOWN:
                     break;
-
                 case WM_INPUT:
                     break;
             }
@@ -48,19 +46,27 @@ namespace GamePad_Intercepts.Forms
             base.WndProc(ref message);
         }
 
-        public void AltF4()
-        {
-            synchronizationContext.Post(delegate
-            {
-                SendKeys.Send("%{F4}");
-            }, null);
-        }
-
         public void AltTab()
         {
             synchronizationContext.Post(delegate
             {
                 SendKeys.Send("%{TAB}");
+            }, null);
+        }
+
+        public void AltEnter()
+        {
+            synchronizationContext.Post(delegate
+            {
+                SendKeys.Send("%{ENTER}");
+            }, null);
+        }
+
+        public void AltF4()
+        {
+            synchronizationContext.Post(delegate
+            {
+                SendKeys.Send("%{F4}");
             }, null);
         }
     }
